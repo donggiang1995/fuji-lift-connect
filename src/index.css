@@ -6,38 +6,37 @@
 
 @layer base {
   :root {
-    /* Base Colors - Dark & Powerful */
-    --background: 220 20% 8%;      /* Dark steel background */
-    --foreground: 220 10% 95%;     /* Light text */
+    /* Base Colors - Light & Professional */
+    --background: 0 0% 100%;
+    --foreground: 220 25% 15%;
 
-    /* Industrial Color Palette - Enhanced */
-    --fuji-blue: 207 100% 55%;     /* Brighter blue */
-    --fuji-navy: 220 60% 15%;      /* Deeper navy */
-    --fuji-orange: 25 95% 60%;     /* Vibrant orange */
-    --steel-gray: 215 20% 45%;     /* Stronger steel */
-    --steel-light: 215 15% 65%;    /* Light steel */
-    --steel-dark: 215 30% 20%;     /* Darker steel */
-    --steel-darker: 220 25% 12%;   /* Ultra dark steel */
+    /* Industrial Color Palette */
+    --fuji-blue: 207 100% 47%;     /* #0079F2 */
+    --fuji-navy: 220 45% 20%;      /* Navy blue */
+    --fuji-orange: 25 95% 55%;     /* Industrial orange */
+    --steel-gray: 215 15% 50%;     /* Steel gray */
+    --steel-light: 215 15% 70%;    /* Light steel */
+    --steel-dark: 215 25% 25%;     /* Dark steel */
 
     /* Card System */
-    --card: 220 20% 12%;
-    --card-foreground: 220 10% 90%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 15%;
 
     /* Popover */
-    --popover: 220 20% 12%;
-    --popover-foreground: 220 10% 90%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 15%;
 
     /* Primary - FUJI Blue */
-    --primary: 207 100% 55%;
-    --primary-foreground: 220 20% 8%;
+    --primary: 207 100% 47%;
+    --primary-foreground: 0 0% 100%;
 
     /* Secondary - Steel Gray */
-    --secondary: 215 20% 18%;
-    --secondary-foreground: 220 10% 90%;
+    --secondary: 215 15% 92%;
+    --secondary-foreground: 220 25% 15%;
 
     /* Muted */
-    --muted: 215 20% 15%;
-    --muted-foreground: 215 15% 60%;
+    --muted: 215 15% 95%;
+    --muted-foreground: 215 15% 50%;
 
     /* Accent - FUJI Orange */
     --accent: 25 95% 55%;
@@ -48,28 +47,25 @@
     --destructive-foreground: 0 0% 100%;
 
     /* Borders */
-    --border: 215 20% 25%;
-    --input: 215 20% 20%;
-    --ring: 207 100% 55%;
+    --border: 215 15% 85%;
+    --input: 215 15% 85%;
+    --ring: 207 100% 47%;
 
     /* Glass Morphism */
     --glass-bg: 0 0% 100% / 0.1;
     --glass-border: 0 0% 100% / 0.2;
     --glass-shadow: 0 0% 0% / 0.1;
 
-    /* Gradients - Enhanced for dark theme */
-    --gradient-primary: linear-gradient(135deg, hsl(207 100% 55%), hsl(220 60% 15%));
-    --gradient-secondary: linear-gradient(135deg, hsl(215 20% 18%), hsl(215 20% 25%));
-    --gradient-hero: linear-gradient(135deg, hsl(220 60% 10%), hsl(207 100% 55%), hsl(25 95% 60%));
-    --gradient-dark: linear-gradient(135deg, hsl(220 25% 12%), hsl(220 20% 8%));
-    --gradient-industrial: linear-gradient(135deg, hsl(220 30% 15%), hsl(207 80% 25%), hsl(220 25% 12%));
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(207 100% 47%), hsl(220 45% 20%));
+    --gradient-secondary: linear-gradient(135deg, hsl(215 15% 92%), hsl(215 15% 70%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 45% 20%), hsl(207 100% 47%), hsl(25 95% 55%));
 
-    /* Industrial Shadows - Enhanced */
-    --shadow-sm: 0 2px 8px hsl(220 30% 5% / 0.3);
-    --shadow-md: 0 4px 16px hsl(220 30% 5% / 0.4);
-    --shadow-lg: 0 8px 32px hsl(220 30% 5% / 0.5);
-    --shadow-glow: 0 0 30px hsl(207 100% 55% / 0.4);
-    --shadow-industrial: 0 8px 40px hsl(220 30% 5% / 0.6);
+    /* Industrial Shadows */
+    --shadow-sm: 0 2px 4px hsl(215 25% 25% / 0.1);
+    --shadow-md: 0 4px 12px hsl(215 25% 25% / 0.15);
+    --shadow-lg: 0 8px 32px hsl(215 25% 25% / 0.2);
+    --shadow-glow: 0 0 20px hsl(207 100% 47% / 0.3);
 
     --radius: 0.5rem;
 

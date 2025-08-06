@@ -6,6 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import newsConference from "@/assets/news-conference.jpg";
+import aboutTeam from "@/assets/about-team.jpg";
+import controlSystem from "@/assets/control-system.jpg";
 
 const News = () => {
   const { language, setLanguage } = useLanguage();
@@ -28,7 +31,7 @@ const News = () => {
           excerpt: "당사의 FCA-9000 시리즈가 국제 안전 표준 인증을 획득했습니다.",
           date: "2024-01-15",
           category: "awards",
-          image: "/src/assets/company-building.jpg"
+          image: aboutTeam
         },
         {
           id: 2,
@@ -36,7 +39,7 @@ const News = () => {
           excerpt: "최신 AI 기술을 적용한 스마트 엘리베이터 제어 시스템을 공개했습니다.",
           date: "2024-01-10",
           category: "technology",
-          image: "/src/assets/control-system.jpg"
+          image: controlSystem
         },
         {
           id: 3,
@@ -44,7 +47,7 @@ const News = () => {
           excerpt: "오는 2월 15일 서울에서 신제품 발표회를 개최할 예정입니다.",
           date: "2024-01-05",
           category: "announcement",
-          image: "/src/assets/traction-machine.jpg"
+          image: newsConference
         }
       ]
     },
@@ -65,7 +68,7 @@ const News = () => {
           excerpt: "Our FCA-9000 Series has obtained international safety standard certification.",
           date: "2024-01-15",
           category: "awards",
-          image: "/src/assets/company-building.jpg"
+          image: aboutTeam
         },
         {
           id: 2,
@@ -73,7 +76,7 @@ const News = () => {
           excerpt: "We unveiled our smart elevator control system with the latest AI technology.",
           date: "2024-01-10", 
           category: "technology",
-          image: "/src/assets/control-system.jpg"
+          image: controlSystem
         },
         {
           id: 3,
@@ -81,7 +84,7 @@ const News = () => {
           excerpt: "A new product launch event will be held in Seoul on February 15th.",
           date: "2024-01-05",
           category: "announcement", 
-          image: "/src/assets/traction-machine.jpg"
+          image: newsConference
         }
       ]
     }
@@ -104,8 +107,14 @@ const News = () => {
       
       <main className="pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-primary via-primary-dark to-steel-dark">
-          <div className="container mx-auto px-4 text-center text-white">
+        <section className="relative py-20 overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${newsConference})` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/60 to-primary/70"></div>
+          </div>
+          <div className="relative container mx-auto px-4 text-center text-white">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">{t.title}</h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">{t.subtitle}</p>
           </div>

@@ -15,6 +15,8 @@ import {
   TrendingUp,
   Shield
 } from "lucide-react";
+import careerTraining from "@/assets/career-training.jpg";
+import aboutTeam from "@/assets/about-team.jpg";
 
 const Careers = () => {
   const { language, setLanguage } = useLanguage();
@@ -256,8 +258,14 @@ const Careers = () => {
       
       <main className="pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-primary via-primary-dark to-steel-dark">
-          <div className="container mx-auto px-4 text-center text-white">
+        <section className="relative py-20 overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${careerTraining})` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/60 to-primary/70"></div>
+          </div>
+          <div className="relative container mx-auto px-4 text-center text-white">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">{t.title}</h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">{t.subtitle}</p>
           </div>
@@ -341,15 +349,24 @@ const Careers = () => {
         {/* Company Culture */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.culture.title}</h2>
-              <p className="text-xl text-muted-foreground mb-8">{t.culture.description}</p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {t.culture.values.map((value, index) => (
-                  <div key={index} className="p-4 bg-muted/50 rounded-lg">
-                    <p className="font-medium">{value}</p>
-                  </div>
-                ))}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.culture.title}</h2>
+                <p className="text-xl text-muted-foreground mb-8">{t.culture.description}</p>
+                <div className="grid grid-cols-2 gap-4">
+                  {t.culture.values.map((value, index) => (
+                    <div key={index} className="p-4 bg-muted/50 rounded-lg">
+                      <p className="font-medium">{value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <img 
+                  src={aboutTeam} 
+                  alt="Team Culture" 
+                  className="rounded-lg shadow-lg w-full h-[400px] object-cover"
+                />
               </div>
             </div>
           </div>
