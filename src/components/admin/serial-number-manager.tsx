@@ -18,10 +18,10 @@ const SerialNumberManager = () => {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     serial_number: '',
-    product_name: '',
-    model: '',
-    manufacture_date: '',
-    status: 'active',
+    product_id: '',
+    installation_date: '',
+    location: '',
+    status: 'active' as 'active' | 'maintenance' | 'retired',
     notes: ''
   });
   const { toast } = useToast();
@@ -29,10 +29,10 @@ const SerialNumberManager = () => {
   const resetForm = () => {
     setFormData({
       serial_number: '',
-      product_name: '',
-      model: '',
-      manufacture_date: '',
-      status: 'active',
+      product_id: '',
+      installation_date: '',
+      location: '',
+      status: 'active' as 'active' | 'maintenance' | 'retired',
       notes: ''
     });
   };
@@ -42,9 +42,9 @@ const SerialNumberManager = () => {
     try {
       await addSerialNumber({
         ...formData,
-        manufacture_date: formData.manufacture_date || null,
-        product_name: formData.product_name || null,
-        model: formData.model || null,
+        product_id: formData.product_id || null,
+        installation_date: formData.installation_date || null,
+        location: formData.location || null,
         notes: formData.notes || null
       });
       resetForm();
@@ -82,10 +82,10 @@ const SerialNumberManager = () => {
           try {
             await addSerialNumber({
               serial_number: String(row['Serial Number'] || row['serial_number'] || '').trim(),
-              product_name: String(row['Product Name'] || row['product_name'] || '').trim() || null,
-              model: String(row['Model'] || row['model'] || '').trim() || null,
-              manufacture_date: row['Manufacture Date'] || row['manufacture_date'] || null,
-              status: String(row['Status'] || row['status'] || 'active').toLowerCase(),
+              product_id: String(row['Product ID'] || row['product_id'] || '').trim() || null,
+              installation_date: String(row['Installation Date'] || row['installation_date'] || '').trim() || null,
+              location: String(row['Location'] || row['location'] || '').trim() || null,
+              status: String(row['Status'] || row['status'] || 'active').toLowerCase() as 'active' | 'maintenance' | 'retired',
               notes: String(row['Notes'] || row['notes'] || '').trim() || null
             });
             successCount++;
@@ -115,9 +115,9 @@ const SerialNumberManager = () => {
   const handleExport = () => {
     const exportData = serialNumbers.map(sn => ({
       'Serial Number': sn.serial_number,
-      'Product Name': sn.product_name || '',
-      'Model': sn.model || '',
-      'Manufacture Date': sn.manufacture_date || '',
+      'Product ID': sn.product_id || '',
+      'Installation Date': sn.installation_date || '',
+      'Location': sn.location || '',
       'Status': sn.status,
       'Notes': sn.notes || '',
       'Created At': new Date(sn.created_at).toLocaleDateString('vi-VN'),
@@ -199,46 +199,45 @@ const SerialNumberManager = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="product_name">Tên sản phẩm</Label>
+                  <Label htmlFor="product_id">Product ID</Label>
                   <Input
-                    id="product_name"
-                    value={formData.product_name}
-                    onChange={(e) => setFormData({ ...formData, product_name: e.target.value })}
-                    placeholder="VD: FJK1-B (325mm)"
+                    id="product_id"
+                    value={formData.product_id}
+                    onChange={(e) => setFormData({ ...formData, product_id: e.target.value })}
+                    placeholder="VD: uuid của sản phẩm"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="model">Model</Label>
+                  <Label htmlFor="installation_date">Ngày lắp đặt</Label>
                   <Input
-                    id="model"
-                    value={formData.model}
-                    onChange={(e) => setFormData({ ...formData, model: e.target.value })}
-                    placeholder="VD: FJK1-B"
+                    id="installation_date"
+                    value={formData.installation_date}
+                    onChange={(e) => setFormData({ ...formData, installation_date: e.target.value })}
+                    placeholder="VD: 2024-01-15"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="manufacture_date">Ngày sản xuất</Label>
+                  <Label htmlFor="location">Địa điểm lắp đặt</Label>
                   <Input
-                    id="manufacture_date"
-                    type="date"
-                    value={formData.manufacture_date}
-                    onChange={(e) => setFormData({ ...formData, manufacture_date: e.target.value })}
+                    id="location"
+                    value={formData.location}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    placeholder="VD: Seoul Tower Building"
                   />
                 </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="status">Trạng thái</Label>
-                  <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value })}>
+                  <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value as 'active' | 'maintenance' | 'retired' })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="active">Hoạt động</SelectItem>
-                      <SelectItem value="inactive">Không hoạt động</SelectItem>
                       <SelectItem value="maintenance">Bảo trì</SelectItem>
-                      <SelectItem value="discontinued">Ngừng sản xuất</SelectItem>
+                      <SelectItem value="retired">Ngừng hoạt động</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -281,9 +280,9 @@ const SerialNumberManager = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>Serial Number</TableHead>
-                  <TableHead>Sản phẩm</TableHead>
-                  <TableHead>Model</TableHead>
-                  <TableHead>Ngày SX</TableHead>
+                  <TableHead>Product ID</TableHead>
+                  <TableHead>Ngày lắp đặt</TableHead>
+                  <TableHead>Địa điểm</TableHead>
                   <TableHead>Trạng thái</TableHead>
                   <TableHead>Ghi chú</TableHead>
                   <TableHead className="w-[100px]">Thao tác</TableHead>
@@ -302,23 +301,19 @@ const SerialNumberManager = () => {
                       <TableCell className="font-mono font-medium">
                         {serialNumber.serial_number}
                       </TableCell>
-                      <TableCell>{serialNumber.product_name || '-'}</TableCell>
-                      <TableCell>{serialNumber.model || '-'}</TableCell>
-                      <TableCell>
-                        {serialNumber.manufacture_date ? 
-                          new Date(serialNumber.manufacture_date).toLocaleDateString('vi-VN') : '-'
-                        }
-                      </TableCell>
+                      <TableCell>{serialNumber.product_id || '-'}</TableCell>
+                      <TableCell>{serialNumber.installation_date || '-'}</TableCell>
+                      <TableCell>{serialNumber.location || '-'}</TableCell>
                       <TableCell>
                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                           serialNumber.status === 'active' ? 'bg-green-100 text-green-800' :
-                          serialNumber.status === 'inactive' ? 'bg-red-100 text-red-800' :
                           serialNumber.status === 'maintenance' ? 'bg-yellow-100 text-yellow-800' :
+                          serialNumber.status === 'retired' ? 'bg-red-100 text-red-800' :
                           'bg-gray-100 text-gray-800'
                         }`}>
                           {serialNumber.status === 'active' ? 'Hoạt động' :
-                           serialNumber.status === 'inactive' ? 'Không hoạt động' :
-                           serialNumber.status === 'maintenance' ? 'Bảo trì' : 'Ngừng SX'}
+                           serialNumber.status === 'maintenance' ? 'Bảo trì' :
+                           serialNumber.status === 'retired' ? 'Ngừng hoạt động' : serialNumber.status}
                         </span>
                       </TableCell>
                       <TableCell>

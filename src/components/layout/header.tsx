@@ -85,7 +85,10 @@ export const Header = ({
           {/* Search & Language */}
           <div className="hidden lg:flex items-center space-x-4 flex-1 max-w-md justify-end">
             <div className="w-full max-w-xs">
-              <SerialSearch placeholder={language === 'ko' ? '시리얼 번호 검색...' : 'Search serial number...'} />
+              <SerialSearch 
+                placeholder={language === 'ko' ? '시리얼 번호 검색...' : 'Search serial number...'} 
+                language={language}
+              />
             </div>
             <LanguageSwitcher currentLang={language} onLanguageChange={onLanguageChange} />
           </div>
@@ -110,7 +113,10 @@ export const Header = ({
               
               {/* Mobile Search */}
               <div className="px-3 py-2">
-                <SerialSearch placeholder={language === 'ko' ? '시리얼 번호 검색...' : 'Search serial number...'} />
+                <SerialSearch 
+                  placeholder={language === 'ko' ? '시리얼 번호 검색...' : 'Search serial number...'} 
+                  language={language}
+                />
               </div>
             </div>
           </div>}

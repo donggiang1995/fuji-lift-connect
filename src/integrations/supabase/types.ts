@@ -215,10 +215,10 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          manufacture_date: string | null
-          model: string | null
+          installation_date: string | null
+          location: string | null
           notes: string | null
-          product_name: string | null
+          product_id: string | null
           serial_number: string
           status: string | null
           updated_at: string
@@ -226,10 +226,10 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
-          manufacture_date?: string | null
-          model?: string | null
+          installation_date?: string | null
+          location?: string | null
           notes?: string | null
-          product_name?: string | null
+          product_id?: string | null
           serial_number: string
           status?: string | null
           updated_at?: string
@@ -237,15 +237,23 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
-          manufacture_date?: string | null
-          model?: string | null
+          installation_date?: string | null
+          location?: string | null
           notes?: string | null
-          product_name?: string | null
+          product_id?: string | null
           serial_number?: string
           status?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "serial_numbers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

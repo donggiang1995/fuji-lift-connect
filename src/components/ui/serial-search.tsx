@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, MapPin, Calendar, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,72 +7,111 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { useSerialNumbers, type SerialSearchResult } from "@/hooks/use-serial-numbers";
 
 interface SerialSearchProps {
   placeholder?: string;
   onSearch?: (serialNumber: string) => void;
+  language: 'ko' | 'en';
 }
 
-interface SerialResult {
-  serialNumber: string;
-  product: {
-    name: string;
-    model: string;
-    category: string;
-  };
-  installationDate: string;
-  location: string;
-  status: 'active' | 'maintenance' | 'inactive';
-}
-
-export const SerialSearch = ({ placeholder, onSearch }: SerialSearchProps) => {
+export const SerialSearch = ({ placeholder, onSearch, language }: SerialSearchProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [result, setResult] = useState<SerialResult | null>(null);
+  const [result, setResult] = useState<SerialSearchResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { searchSerialNumber } = useSerialNumbers();
+
+  const content = {
+    ko: {
+      searchResult: "검색 결과",
+      searching: "검색 중...",
+      notFound: "검색 결과가 없습니다",
+      serialNumber: "시리얼 번호",
+      status: "상태",
+      location: "위치",
+      installationDate: "설치일",
+      productName: "제품명",
+      description: "설명",
+      category: "카테고리",
+      model: "모델",
+      specifications: "사양",
+      features: "특징",
+      active: "정상 운행",
+      maintenance: "정비 중",
+      retired: "운행 중단",
+      errorMessage: "검색 중 오류가 발생했습니다"
+    },
+    en: {
+      searchResult: "Search Result",
+      searching: "Searching...",
+      notFound: "No results found",
+      serialNumber: "Serial Number",
+      status: "Status",
+      location: "Location",
+      installationDate: "Installation Date",
+      productName: "Product Name",
+      description: "Description",
+      category: "Category",
+      model: "Model",
+      specifications: "Specifications",
+      features: "Features",
+      active: "Active",
+      maintenance: "Under Maintenance",
+      retired: "Retired",
+      errorMessage: "An error occurred during search"
+    }
+  };
+
+  const t = content[language];
 
   const handleSearch = async () => {
     if (!searchTerm.trim()) return;
     
     setLoading(true);
+    setError(null);
     
-    // Simulate API call - replace with actual Supabase query
-    setTimeout(() => {
-      // Mock result for demo
-      if (searchTerm.includes("FCA-9000")) {
-        setResult({
-          serialNumber: searchTerm,
-          product: {
-            name: "FCA-9000 Series",
-            model: "FCA-9000",
-            category: "Control System"
-          },
-          installationDate: "2024-01-15",
-          location: "Seoul Tower Building",
-          status: "active"
-        });
-      } else {
-        setResult(null);
-      }
-      setLoading(false);
+    try {
+      const searchResult = await searchSerialNumber(searchTerm);
+      setResult(searchResult);
       setIsOpen(true);
-    }, 1000);
+    } catch (err) {
+      setError(t.errorMessage);
+    } finally {
+      setLoading(false);
+    }
     
     onSearch?.(searchTerm);
   };
 
-  const getStatusBadge = (status: string) => {
-    const variants = {
-      active: "bg-green-100 text-green-800",
-      maintenance: "bg-yellow-100 text-yellow-800",
-      inactive: "bg-red-100 text-red-800"
+  const getStatusBadge = (status: 'active' | 'maintenance' | 'retired') => {
+    const statusConfig = {
+      active: {
+        className: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+        text: t.active,
+        indicator: "🟢"
+      },
+      maintenance: {
+        className: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+        text: t.maintenance,
+        indicator: "🟡"
+      },
+      retired: {
+        className: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
+        text: t.retired,
+        indicator: "🔴"
+      }
     };
     
+    const config = statusConfig[status];
     return (
-      <Badge className={variants[status as keyof typeof variants] || "bg-gray-100 text-gray-800"}>
-        {status.toUpperCase()}
+      <Badge className={config.className}>
+        {config.indicator} {config.text}
       </Badge>
     );
   };
@@ -93,54 +132,149 @@ export const SerialSearch = ({ placeholder, onSearch }: SerialSearchProps) => {
         <Button 
           onClick={handleSearch} 
           disabled={loading}
-          className="btn-industrial"
+          className="bg-primary hover:bg-primary/90"
         >
-          {loading ? "Searching..." : "Search"}
+          {loading ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              {t.searching}
+            </>
+          ) : (
+            "Search"
+          )}
         </Button>
       </div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Serial Number Result</DialogTitle>
+            <DialogTitle>{t.searchResult}</DialogTitle>
+            <DialogDescription>
+              {searchTerm && `${t.serialNumber}: ${searchTerm}`}
+            </DialogDescription>
           </DialogHeader>
           
-          {result ? (
-            <div className="space-y-4">
-              <div className="industrial-card p-4 rounded-lg">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold text-lg">{result.product.name}</h3>
-                  {getStatusBadge(result.status)}
-                </div>
-                
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Serial Number:</span>
-                    <span className="font-mono">{result.serialNumber}</span>
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="w-6 h-6 animate-spin mr-2" />
+              <span>{t.searching}</span>
+            </div>
+          ) : error ? (
+            <div className="text-center py-8">
+              <div className="text-red-500 text-2xl mb-2">❌</div>
+              <p className="text-destructive font-medium">{error}</p>
+            </div>
+          ) : result ? (
+            <div className="space-y-6">
+              {/* Serial Number Information */}
+              <Card className="industrial-card">
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="font-semibold text-lg flex items-center gap-2">
+                        <span className="w-2 h-2 bg-primary rounded-full"></span>
+                        {t.serialNumber}
+                      </h3>
+                      <p className="font-mono text-xl mt-1">{result.serialNumber.serial_number}</p>
+                    </div>
+                    {getStatusBadge(result.serialNumber.status)}
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Model:</span>
-                    <span>{result.product.model}</span>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    {result.serialNumber.location && (
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">{t.location}:</span>
+                        <span>{result.serialNumber.location}</span>
+                      </div>
+                    )}
+                    {result.serialNumber.installation_date && (
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">{t.installationDate}:</span>
+                        <span>{result.serialNumber.installation_date}</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Category:</span>
-                    <span>{result.product.category}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Installation Date:</span>
-                    <span>{result.installationDate}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Location:</span>
-                    <span>{result.location}</span>
-                  </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
+
+              {/* Product Information */}
+              {result.product && (
+                <Card className="industrial-card">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="font-semibold text-lg">
+                            {language === 'ko' ? result.product.name_ko : result.product.name_en}
+                          </h3>
+                          {result.product.category && (
+                            <Badge variant="secondary">
+                              {language === 'ko' ? result.product.category.name_ko : result.product.category.name_en}
+                            </Badge>
+                          )}
+                        </div>
+                        
+                        <p className="text-muted-foreground mb-4">
+                          {language === 'ko' ? result.product.description_ko : result.product.description_en}
+                        </p>
+
+                        {/* Specifications */}
+                        {result.product.specifications && Object.keys(result.product.specifications).length > 0 && (
+                          <div className="mb-4">
+                            <h4 className="font-medium mb-2">{t.specifications}</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                              {Object.entries(result.product.specifications).map(([key, value]) => (
+                                <div key={key} className="flex justify-between">
+                                  <span className="text-muted-foreground">{key}:</span>
+                                  <span>{String(value)}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Features */}
+                        {((language === 'ko' && result.product.features_ko?.length) || 
+                          (language === 'en' && result.product.features_en?.length)) && (
+                          <div>
+                            <h4 className="font-medium mb-2">{t.features}</h4>
+                            <ul className="text-sm space-y-1">
+                              {(language === 'ko' ? result.product.features_ko : result.product.features_en)?.map((feature, index) => (
+                                <li key={index} className="flex items-center gap-2">
+                                  <span className="w-1 h-1 bg-primary rounded-full"></span>
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Product Image */}
+                      {result.product.image_url && (
+                        <div className="ml-4 flex-shrink-0">
+                          <img 
+                            src={result.product.image_url} 
+                            alt={language === 'ko' ? result.product.name_ko : result.product.name_en}
+                            className="w-40 h-40 object-cover rounded-lg"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           ) : (
             <div className="text-center py-8">
-              <p className="text-muted-foreground">
-                No results found for "{searchTerm}"
+              <div className="text-gray-400 text-2xl mb-2">❌</div>
+              <p className="text-muted-foreground font-medium">
+                {t.notFound} "{searchTerm}"
               </p>
               <p className="text-sm text-muted-foreground mt-2">
                 Please check the serial number and try again.

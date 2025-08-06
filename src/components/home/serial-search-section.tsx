@@ -50,6 +50,7 @@ export const SerialSearchSection = ({ language }: SerialSearchSectionProps) => {
                 onSearch={(serialNumber) => {
                   console.log('Searching for:', serialNumber);
                 }}
+                language={language}
               />
             </div>
             
