@@ -5,6 +5,8 @@ import { useLanguage } from "@/hooks/use-language";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Building, Users, Award, Target } from "lucide-react";
+import aboutIndustrial from "@/assets/about-industrial.jpg";
+import aboutTeam from "@/assets/about-team.jpg";
 
 const About = () => {
   const { language, setLanguage } = useLanguage();
@@ -70,21 +72,29 @@ const About = () => {
       
       <main className="pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-primary via-primary-dark to-steel-dark">
-          <div className="container mx-auto px-4 text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">{t.title}</h1>
+        <section className="relative py-20 overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${aboutIndustrial})` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/80"></div>
+          </div>
+          <div className="relative container mx-auto px-4 text-center text-white">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gradient-primary">{t.title}</h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">{t.subtitle}</p>
           </div>
         </section>
 
         {/* Stats Section */}
-        <section className="py-16 bg-background">
+        <section className="py-16 bg-background relative">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {t.stats.map((stat, index) => (
-                <Card key={index} className="industrial-card text-center">
+                <Card key={index} className="industrial-card text-center glow-effect">
                   <CardContent className="p-6">
-                    <stat.icon className="h-8 w-8 mx-auto mb-4 text-primary" />
+                    <div className="p-3 bg-gradient-primary rounded-full mx-auto mb-4 w-fit">
+                      <stat.icon className="h-8 w-8 text-white" />
+                    </div>
                     <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
                     <div className="text-sm text-muted-foreground">{stat.label}</div>
                   </CardContent>
@@ -94,23 +104,34 @@ const About = () => {
           </div>
         </section>
 
-        {/* History Timeline */}
-        <section className="py-16 bg-muted/30">
+        {/* Team & History Section */}
+        <section className="py-16 bg-gradient-industrial">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">{t.history.title}</h2>
-            <div className="max-w-4xl mx-auto">
-              {t.history.items.map((item, index) => (
-                <div key={index} className="flex items-center mb-8 last:mb-0">
-                  <Badge variant="secondary" className="text-lg px-4 py-2 mr-6 min-w-fit">
-                    {item.year}
-                  </Badge>
-                  <Card className="flex-1 industrial-card">
-                    <CardContent className="p-4">
-                      <p className="text-lg">{item.text}</p>
-                    </CardContent>
-                  </Card>
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+              <div>
+                <img 
+                  src={aboutTeam} 
+                  alt="Professional Team" 
+                  className="rounded-lg shadow-industrial w-full h-[400px] object-cover"
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold mb-6 text-primary">{t.history.title}</h2>
+                <div className="space-y-6">
+                  {t.history.items.map((item, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <Badge variant="secondary" className="text-lg px-4 py-2 min-w-fit bg-primary text-white">
+                        {item.year}
+                      </Badge>
+                      <Card className="flex-1 industrial-card">
+                        <CardContent className="p-4">
+                          <p className="text-lg">{item.text}</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </section>
@@ -118,18 +139,18 @@ const About = () => {
         {/* Mission & Vision */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">{t.mission.title}</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-gradient-primary">{t.mission.title}</h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <Card className="industrial-card">
-                <CardContent className="p-8">
+              <Card className="industrial-card glow-effect">
+                <CardContent className="p-8 bg-gradient-secondary">
                   <h3 className="text-2xl font-bold text-primary mb-4">
                     {language === 'ko' ? '미션' : 'Mission'}
                   </h3>
                   <p className="text-lg leading-relaxed">{t.mission.mission}</p>
                 </CardContent>
               </Card>
-              <Card className="industrial-card">
-                <CardContent className="p-8">
+              <Card className="industrial-card glow-effect">
+                <CardContent className="p-8 bg-gradient-secondary">
                   <h3 className="text-2xl font-bold text-primary mb-4">
                     {language === 'ko' ? '비전' : 'Vision'}
                   </h3>

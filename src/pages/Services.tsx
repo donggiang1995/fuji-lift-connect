@@ -14,6 +14,9 @@ import {
   Zap,
   Users
 } from "lucide-react";
+import servicesInstallation from "@/assets/services-installation.jpg";
+import servicesMaintenance from "@/assets/services-maintenance.jpg";
+import servicesModernization from "@/assets/services-modernization.jpg";
 
 const Services = () => {
   const { language, setLanguage } = useLanguage();
@@ -225,11 +228,17 @@ const Services = () => {
       
       <main className="pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-primary via-primary-dark to-steel-dark">
-          <div className="container mx-auto px-4 text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">{t.title}</h1>
+        <section className="relative py-20 overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${servicesInstallation})` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/80"></div>
+          </div>
+          <div className="relative container mx-auto px-4 text-center text-white">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gradient-primary">{t.title}</h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-8">{t.subtitle}</p>
-            <Button size="lg" variant="secondary">
+            <Button size="lg" className="btn-industrial glow-effect">
               {t.contactUs}
             </Button>
           </div>
@@ -238,15 +247,79 @@ const Services = () => {
         {/* Services Grid */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
+            {/* Featured Services with Images */}
+            <div className="grid lg:grid-cols-3 gap-8 mb-16">
+              {/* Installation Service */}
+              <Card className="industrial-card glow-effect overflow-hidden">
+                <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url(${servicesInstallation})` }}>
+                  <div className="h-full bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                    <h3 className="text-xl font-bold text-white">{t.services[0].title}</h3>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <p className="text-muted-foreground mb-4">{t.services[0].description}</p>
+                  <ul className="space-y-2">
+                    {t.services[0].features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-2 text-sm">
+                        <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Maintenance Service */}
+              <Card className="industrial-card glow-effect overflow-hidden">
+                <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url(${servicesMaintenance})` }}>
+                  <div className="h-full bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                    <h3 className="text-xl font-bold text-white">{t.services[1].title}</h3>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <p className="text-muted-foreground mb-4">{t.services[1].description}</p>
+                  <ul className="space-y-2">
+                    {t.services[1].features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-2 text-sm">
+                        <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Modernization Service */}
+              <Card className="industrial-card glow-effect overflow-hidden">
+                <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url(${servicesModernization})` }}>
+                  <div className="h-full bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                    <h3 className="text-xl font-bold text-white">{t.services[2].title}</h3>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <p className="text-muted-foreground mb-4">{t.services[2].description}</p>
+                  <ul className="space-y-2">
+                    {t.services[2].features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-2 text-sm">
+                        <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Other Services */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {t.services.map((service, index) => {
+              {t.services.slice(3).map((service, index) => {
                 const IconComponent = service.icon;
                 return (
-                  <Card key={index} className="industrial-card hover:shadow-lg transition-shadow">
+                  <Card key={index + 3} className="industrial-card glow-effect hover:shadow-lg transition-all">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 bg-primary/10 rounded-lg">
-                          <IconComponent className="h-6 w-6 text-primary" />
+                        <div className="p-3 bg-gradient-primary rounded-lg">
+                          <IconComponent className="h-6 w-6 text-white" />
                         </div>
                         <h3 className="text-xl font-bold">{service.title}</h3>
                       </div>
@@ -268,22 +341,24 @@ const Services = () => {
         </section>
 
         {/* Why Choose Us */}
-        <section className="py-16 bg-muted/30">
+        <section className="py-16 bg-gradient-industrial">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.whyChooseUs.title}</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient-primary">{t.whyChooseUs.title}</h2>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {t.whyChooseUs.reasons.map((reason, index) => {
                 const IconComponent = reason.icon;
                 return (
-                  <div key={index} className="text-center">
-                    <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                      <IconComponent className="h-8 w-8 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">{reason.title}</h3>
-                    <p className="text-muted-foreground">{reason.description}</p>
-                  </div>
+                  <Card key={index} className="industrial-card glow-effect text-center">
+                    <CardContent className="p-6">
+                      <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mb-4">
+                        <IconComponent className="h-8 w-8 text-white" />
+                      </div>
+                      <h3 className="text-xl font-bold mb-2 text-primary">{reason.title}</h3>
+                      <p className="text-muted-foreground">{reason.description}</p>
+                    </CardContent>
+                  </Card>
                 );
               })}
             </div>
