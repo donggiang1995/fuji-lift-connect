@@ -66,7 +66,7 @@ export const Header = ({
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <NavLink to="/" className="flex items-center space-x-3">
-            <img src="/lovable-uploads/7691a527-c183-43c5-adc8-1bbf23452636.png" alt="FUJI Global Korea" className="h-16 w-auto md:h-20 object-contain bg-transparent" />
+            <img src="/lovable-uploads/7691a527-c183-43c5-adc8-1bbf23452636.png" alt="FUJI Global Korea" className="h-11 w-auto md:h-14 object-contain bg-transparent" />
             <div className="hidden md:block">
               
               
