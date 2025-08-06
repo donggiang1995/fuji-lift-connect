@@ -16,10 +16,10 @@ import { useSerialNumbers, type SerialSearchResult } from "@/hooks/use-serial-nu
 interface SerialSearchProps {
   placeholder?: string;
   onSearch?: (serialNumber: string) => void;
-  language: 'ko' | 'en';
+  language?: 'ko' | 'en';
 }
 
-export const SerialSearch = ({ placeholder, onSearch, language }: SerialSearchProps) => {
+export const SerialSearch = ({ placeholder, onSearch, language = 'en' }: SerialSearchProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [result, setResult] = useState<SerialSearchResult | null>(null);
@@ -68,7 +68,9 @@ export const SerialSearch = ({ placeholder, onSearch, language }: SerialSearchPr
     }
   };
 
-  const t = content[language];
+  // Ensure we have a valid language and content
+  const validLanguage = language === 'ko' ? 'ko' : 'en';
+  const t = content[validLanguage];
 
   const handleSearch = async () => {
     if (!searchTerm.trim()) return;
@@ -203,22 +205,22 @@ export const SerialSearch = ({ placeholder, onSearch, language }: SerialSearchPr
               {result.product && (
                 <Card className="industrial-card">
                   <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="font-semibold text-lg">
-                            {language === 'ko' ? result.product.name_ko : result.product.name_en}
-                          </h3>
-                          {result.product.category && (
-                            <Badge variant="secondary">
-                              {language === 'ko' ? result.product.category.name_ko : result.product.category.name_en}
-                            </Badge>
-                          )}
-                        </div>
-                        
-                        <p className="text-muted-foreground mb-4">
-                          {language === 'ko' ? result.product.description_ko : result.product.description_en}
-                        </p>
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h3 className="font-semibold text-lg">
+                              {validLanguage === 'ko' ? result.product.name_ko : result.product.name_en}
+                            </h3>
+                            {result.product.category && (
+                              <Badge variant="secondary">
+                                {validLanguage === 'ko' ? result.product.category.name_ko : result.product.category.name_en}
+                              </Badge>
+                            )}
+                          </div>
+                          
+                          <p className="text-muted-foreground mb-4">
+                            {validLanguage === 'ko' ? result.product.description_ko : result.product.description_en}
+                          </p>
 
                         {/* Specifications */}
                         {result.product.specifications && Object.keys(result.product.specifications).length > 0 && (
@@ -236,12 +238,12 @@ export const SerialSearch = ({ placeholder, onSearch, language }: SerialSearchPr
                         )}
 
                         {/* Features */}
-                        {((language === 'ko' && result.product.features_ko?.length) || 
-                          (language === 'en' && result.product.features_en?.length)) && (
+                        {((validLanguage === 'ko' && result.product.features_ko?.length) || 
+                          (validLanguage === 'en' && result.product.features_en?.length)) && (
                           <div>
                             <h4 className="font-medium mb-2">{t.features}</h4>
                             <ul className="text-sm space-y-1">
-                              {(language === 'ko' ? result.product.features_ko : result.product.features_en)?.map((feature, index) => (
+                              {(validLanguage === 'ko' ? result.product.features_ko : result.product.features_en)?.map((feature, index) => (
                                 <li key={index} className="flex items-center gap-2">
                                   <span className="w-1 h-1 bg-primary rounded-full"></span>
                                   {feature}
@@ -257,7 +259,7 @@ export const SerialSearch = ({ placeholder, onSearch, language }: SerialSearchPr
                         <div className="ml-4 flex-shrink-0">
                           <img 
                             src={result.product.image_url} 
-                            alt={language === 'ko' ? result.product.name_ko : result.product.name_en}
+                            alt={validLanguage === 'ko' ? result.product.name_ko : result.product.name_en}
                             className="w-40 h-40 object-cover rounded-lg"
                             onError={(e) => {
                               e.currentTarget.style.display = 'none';
