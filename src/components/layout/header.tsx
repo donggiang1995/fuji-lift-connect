@@ -61,9 +61,9 @@ export const Header = ({
 }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const nav = navigation[language];
-  return <header className="fixed top-0 left-0 right-0 z-50 glass-morphism border-b border-white/20">
+  return <header className="fixed top-0 left-0 right-0 z-50 glass-morphism border-b border-white/20 bg-slate-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-16 md:h-20 bg-slate-50">
           {/* Logo */}
           <NavLink to="/" className="flex items-center space-x-3">
             <img src="/lovable-uploads/7691a527-c183-43c5-adc8-1bbf23452636.png" alt="FUJI Global Korea" className="h-11 w-auto md:h-14 object-contain bg-transparent" />
@@ -85,10 +85,7 @@ export const Header = ({
           {/* Search & Language */}
           <div className="hidden lg:flex items-center space-x-4 flex-1 max-w-md justify-end">
             <div className="w-full max-w-xs">
-              <SerialSearch 
-                placeholder={language === 'ko' ? '시리얼 번호 검색...' : 'Search serial number...'} 
-                language={language}
-              />
+              <SerialSearch placeholder={language === 'ko' ? '시리얼 번호 검색...' : 'Search serial number...'} language={language} />
             </div>
             <LanguageSwitcher currentLang={language} onLanguageChange={onLanguageChange} />
           </div>
@@ -113,10 +110,7 @@ export const Header = ({
               
               {/* Mobile Search */}
               <div className="px-3 py-2">
-                <SerialSearch 
-                  placeholder={language === 'ko' ? '시리얼 번호 검색...' : 'Search serial number...'} 
-                  language={language}
-                />
+                <SerialSearch placeholder={language === 'ko' ? '시리얼 번호 검색...' : 'Search serial number...'} language={language} />
               </div>
             </div>
           </div>}
