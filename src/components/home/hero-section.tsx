@@ -80,7 +80,7 @@ export const HeroSection = ({
               {t.cta1}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button size="lg" variant="outline" className="glass-morphism text-white border-white/30 hover:bg-white/10 text-lg px-8 py-4">
+            <Button size="lg" variant="outline" className="glass-morphism border-white/30 hover:bg-white/10 text-lg px-8 py-4 text-cyan-950">
               <Play className="mr-2 h-5 w-5" />
               {t.cta2}
             </Button>
