@@ -39,7 +39,7 @@ export const Header = ({ language, onLanguageChange }: HeaderProps) => {
             <img 
               src="/lovable-uploads/7691a527-c183-43c5-adc8-1bbf23452636.png" 
               alt="FUJI Global Korea" 
-              className="h-32 w-auto md:h-40 object-contain bg-transparent"
+              className="h-16 w-auto md:h-20 object-contain bg-transparent"
             />
             <div className="hidden md:block">
               <div className="text-lg font-bold text-primary">FUJI Global Korea</div>
