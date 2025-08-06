@@ -29,7 +29,8 @@ import {
   Shield,
   Hash,
   Plus,
-  Settings
+  Settings,
+  Copy
 } from 'lucide-react';
 
 const Admin = () => {
@@ -78,11 +79,13 @@ const Admin = () => {
         title: "제품 목록",
         add: "제품 추가",
         name: "제품명",
+        id: "제품 ID",
         category: "카테고리",
         status: "상태",
         actions: "작업",
         active: "활성",
-        inactive: "비활성"
+        inactive: "비활성",
+        copyId: "ID 복사"
       },
       inquiries: {
         title: "고객 문의",
@@ -122,11 +125,13 @@ const Admin = () => {
         title: "Product List",
         add: "Add Product",
         name: "Product Name",
+        id: "Product ID",
         category: "Category",
         status: "Status",
         actions: "Actions",
         active: "Active",
-        inactive: "Inactive"
+        inactive: "Inactive",
+        copyId: "Copy ID"
       },
       inquiries: {
         title: "Customer Inquiries",
@@ -253,6 +258,22 @@ const Admin = () => {
     }
   };
 
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: "Success",
+        description: "ID copied to clipboard"
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to copy ID",
+        variant: "destructive"
+      });
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
@@ -363,6 +384,7 @@ const Admin = () => {
                         <TableHeader>
                           <TableRow>
                             <TableHead>{t.products.name}</TableHead>
+                            <TableHead>{t.products.id}</TableHead>
                             <TableHead>{t.products.category}</TableHead>
                             <TableHead>{t.products.status}</TableHead>
                             <TableHead>{t.products.actions}</TableHead>
@@ -373,6 +395,22 @@ const Admin = () => {
                             <TableRow key={product.id}>
                               <TableCell>
                                 {language === 'ko' ? product.name_ko : product.name_en}
+                              </TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-2">
+                                  <code className="text-xs bg-muted px-2 py-1 rounded font-mono">
+                                    {product.id}
+                                  </code>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => copyToClipboard(product.id)}
+                                    className="h-6 w-6 p-0"
+                                    title={t.products.copyId}
+                                  >
+                                    <Copy className="h-3 w-3" />
+                                  </Button>
+                                </div>
                               </TableCell>
                               <TableCell>
                                 {product.category ? 
