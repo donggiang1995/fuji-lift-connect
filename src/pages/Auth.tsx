@@ -119,6 +119,33 @@ const Auth = () => {
     }
   };
 
+  // Demo admin account creation
+  const createDemoAdmin = async () => {
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: 'admin@company.com',
+        password: 'Giang123@',
+        options: {
+          data: {
+            full_name: 'Admin User',
+            role: 'admin'
+          }
+        }
+      });
+
+      if (error) {
+        console.error('Error creating demo admin:', error);
+      }
+    } catch (error) {
+      console.error('Error creating demo admin:', error);
+    }
+  };
+
+  // Create demo admin on component mount
+  useEffect(() => {
+    createDemoAdmin();
+  }, []);
+
   if (session) {
     return null; // Will redirect to admin
   }
