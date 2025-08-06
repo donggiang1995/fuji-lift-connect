@@ -92,7 +92,7 @@ export const HeroSection = ({
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
                   {stat.number}
                 </div>
-                <div className="text-sm md:text-base text-gray-300">
+                <div className="text-sm md:text-base text-gray-300 bg-slate-900">
                   {stat.label}
                 </div>
               </div>)}
