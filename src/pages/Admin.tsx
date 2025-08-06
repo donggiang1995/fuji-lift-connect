@@ -13,6 +13,8 @@ import { useLanguage } from '@/hooks/use-language';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import SerialNumberManager from '@/components/admin/serial-number-manager';
+import ProductImageUpload from '@/components/admin/product-image-upload';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
   LayoutDashboard, 
   Package, 
@@ -30,7 +32,8 @@ import {
   Hash,
   Plus,
   Settings,
-  Copy
+  Copy,
+  Upload
 } from 'lucide-react';
 
 const Admin = () => {
@@ -85,7 +88,8 @@ const Admin = () => {
         actions: "작업",
         active: "활성",
         inactive: "비활성",
-        copyId: "ID 복사"
+        copyId: "ID 복사",
+        uploadImage: "이미지 업로드"
       },
       inquiries: {
         title: "고객 문의",
@@ -131,7 +135,8 @@ const Admin = () => {
         actions: "Actions",
         active: "Active",
         inactive: "Inactive",
-        copyId: "Copy ID"
+        copyId: "Copy ID",
+        uploadImage: "Upload Image"
       },
       inquiries: {
         title: "Customer Inquiries",
@@ -274,6 +279,14 @@ const Admin = () => {
     }
   };
 
+  const handleImageUpdate = (productId: string, newImageUrl: string) => {
+    setProducts(prev => prev.map(product => 
+      product.id === productId 
+        ? { ...product, image_url: newImageUrl }
+        : product
+    ));
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
@@ -383,6 +396,7 @@ const Admin = () => {
                       <Table>
                         <TableHeader>
                           <TableRow>
+                            <TableHead>Image</TableHead>
                             <TableHead>{t.products.name}</TableHead>
                             <TableHead>{t.products.id}</TableHead>
                             <TableHead>{t.products.category}</TableHead>
@@ -393,6 +407,40 @@ const Admin = () => {
                         <TableBody>
                           {products.map((product) => (
                             <TableRow key={product.id}>
+                              <TableCell>
+                                <div className="flex items-center gap-2">
+                                  {product.image_url ? (
+                                    <img 
+                                      src={product.image_url} 
+                                      alt={language === 'ko' ? product.name_ko : product.name_en}
+                                      className="w-12 h-12 object-cover rounded border"
+                                    />
+                                  ) : (
+                                    <div className="w-12 h-12 bg-muted rounded border flex items-center justify-center">
+                                      <Package className="h-6 w-6 text-muted-foreground" />
+                                    </div>
+                                  )}
+                                  <Dialog>
+                                    <DialogTrigger asChild>
+                                      <Button size="sm" variant="outline">
+                                        <Upload className="h-4 w-4 mr-1" />
+                                        {t.products.uploadImage}
+                                      </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="max-w-md">
+                                      <DialogHeader>
+                                        <DialogTitle>{t.products.uploadImage}</DialogTitle>
+                                      </DialogHeader>
+                                      <ProductImageUpload
+                                        productId={product.id}
+                                        currentImageUrl={product.image_url}
+                                        onImageUpdate={(newUrl) => handleImageUpdate(product.id, newUrl)}
+                                        language={language}
+                                      />
+                                    </DialogContent>
+                                  </Dialog>
+                                </div>
+                              </TableCell>
                               <TableCell>
                                 {language === 'ko' ? product.name_ko : product.name_en}
                               </TableCell>
@@ -424,13 +472,15 @@ const Admin = () => {
                                 </Badge>
                               </TableCell>
                               <TableCell>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => toggleProductStatus(product.id, product.is_active)}
-                                >
-                                  {product.is_active ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                </Button>
+                                <div className="flex gap-2">
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => toggleProductStatus(product.id, product.is_active)}
+                                  >
+                                    {product.is_active ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                  </Button>
+                                </div>
                               </TableCell>
                             </TableRow>
                           ))}
