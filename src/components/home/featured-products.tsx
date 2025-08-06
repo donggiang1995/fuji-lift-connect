@@ -2,6 +2,8 @@ import React from "react";
 import { ArrowRight, Zap, Shield, Settings, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import controlSystemImg from "@/assets/control-system.jpg";
+import tractionMachineImg from "@/assets/traction-machine.jpg";
 
 interface FeaturedProductsProps {
   language: 'ko' | 'en';
@@ -20,7 +22,7 @@ const content = {
         category: "제어 시스템",
         description: "고급 제어 패널을 갖춘 차세대 엘리베이터 제어 시스템",
         features: ["터치스크린 인터페이스", "에너지 효율적", "안전 인증", "IoT 연결"],
-        image: "/api/placeholder/400/300",
+        image: controlSystemImg,
         badge: "인기"
       },
       {
@@ -29,7 +31,7 @@ const content = {
         category: "견인 시스템",
         description: "고효율 모터와 컴팩트한 디자인을 특징으로 하는 견인기",
         features: ["고효율 모터", "컴팩트 설계", "저소음 운전", "에너지 절약"],
-        image: "/api/placeholder/400/300",
+        image: tractionMachineImg,
         badge: "신제품"
       },
       {
@@ -38,7 +40,7 @@ const content = {
         category: "제어 시스템",
         description: "최신 기술이 적용된 사용자 친화적 제어 패널",
         features: ["7인치 LCD", "다국어 지원", "IoT 연결", "터치 인터페이스"],
-        image: "/api/placeholder/400/300",
+        image: controlSystemImg,
         badge: "최신"
       }
     ]
@@ -55,7 +57,7 @@ const content = {
         category: "Control System",
         description: "Next-generation elevator control system with advanced control panel",
         features: ["Touch Screen Interface", "Energy Efficient", "Safety Certified", "IoT Connected"],
-        image: "/api/placeholder/400/300",
+        image: controlSystemImg,
         badge: "Popular"
       },
       {
@@ -64,7 +66,7 @@ const content = {
         category: "Traction System",
         description: "High efficiency traction machine with compact design",
         features: ["High Efficiency Motor", "Compact Design", "Low Noise Operation", "Energy Saving"],
-        image: "/api/placeholder/400/300",
+        image: tractionMachineImg,
         badge: "New"
       },
       {
@@ -73,7 +75,7 @@ const content = {
         category: "Control System",
         description: "Latest technology control panel with user-friendly interface",
         features: ["7-inch LCD", "Multi-language", "IoT Connectivity", "Touch Interface"],
-        image: "/api/placeholder/400/300",
+        image: controlSystemImg,
         badge: "Latest"
       }
     ]
