@@ -14,7 +14,173 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          created_at: string
+          description_en: string | null
+          description_ko: string | null
+          icon: string | null
+          id: string
+          is_active: boolean
+          name_en: string
+          name_ko: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description_en?: string | null
+          description_ko?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          name_en: string
+          name_ko: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description_en?: string | null
+          description_ko?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          name_en?: string
+          name_ko?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      contact_inquiries: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      news: {
+        Row: {
+          content_en: string | null
+          content_ko: string | null
+          created_at: string
+          excerpt_en: string | null
+          excerpt_ko: string | null
+          id: string
+          image_url: string | null
+          is_published: boolean
+          published_at: string | null
+          title_en: string
+          title_ko: string
+          updated_at: string
+        }
+        Insert: {
+          content_en?: string | null
+          content_ko?: string | null
+          created_at?: string
+          excerpt_en?: string | null
+          excerpt_ko?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          published_at?: string | null
+          title_en: string
+          title_ko: string
+          updated_at?: string
+        }
+        Update: {
+          content_en?: string | null
+          content_ko?: string | null
+          created_at?: string
+          excerpt_en?: string | null
+          excerpt_ko?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          published_at?: string | null
+          title_en?: string
+          title_ko?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category_id: string
+          created_at: string
+          description_en: string | null
+          description_ko: string | null
+          features_en: string[] | null
+          features_ko: string[] | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          name_en: string
+          name_ko: string
+          price: number | null
+          specifications: Json | null
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description_en?: string | null
+          description_ko?: string | null
+          features_en?: string[] | null
+          features_ko?: string[] | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          name_en: string
+          name_ko: string
+          price?: number | null
+          specifications?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description_en?: string | null
+          description_ko?: string | null
+          features_en?: string[] | null
+          features_ko?: string[] | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          name_en?: string
+          name_ko?: string
+          price?: number | null
+          specifications?: Json | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
