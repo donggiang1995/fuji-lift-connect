@@ -2,6 +2,7 @@ import React from "react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/home/hero-section";
+import { SerialSearchSection } from "@/components/home/serial-search-section";
 import { FeaturedProducts } from "@/components/home/featured-products";
 import { useLanguage } from "@/hooks/use-language";
 
@@ -14,6 +15,7 @@ const Index = () => {
       
       <main className="pt-16 md:pt-20">
         <HeroSection language={language} />
+        <SerialSearchSection language={language} />
         <FeaturedProducts language={language} />
       </main>
       
