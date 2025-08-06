@@ -9,18 +9,20 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useSerialNumbers, SerialNumber } from '@/hooks/use-serial-numbers';
+import { useProducts } from '@/hooks/use-products';
 import { Plus, Trash2, Download, Upload, FileSpreadsheet } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import * as XLSX from 'xlsx';
 
 const SerialNumberManager = () => {
   const { serialNumbers, loading, addSerialNumber, deleteSerialNumber, updateSerialNumber } = useSerialNumbers();
+  const { products, loading: productsLoading } = useProducts();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     serial_number: '',
     product_id: '',
-    installation_date: '',
-    location: '',
+    installation_date: new Date().getFullYear().toString(),
+    location: 'KOREA',
     status: 'active' as 'active' | 'maintenance' | 'retired',
     notes: ''
   });
@@ -30,8 +32,8 @@ const SerialNumberManager = () => {
     setFormData({
       serial_number: '',
       product_id: '',
-      installation_date: '',
-      location: '',
+      installation_date: new Date().getFullYear().toString(),
+      location: 'KOREA',
       status: 'active' as 'active' | 'maintenance' | 'retired',
       notes: ''
     });
@@ -200,21 +202,30 @@ const SerialNumberManager = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="product_id">Product ID</Label>
-                  <Input
-                    id="product_id"
-                    value={formData.product_id}
-                    onChange={(e) => setFormData({ ...formData, product_id: e.target.value })}
-                    placeholder="VD: uuid của sản phẩm"
-                  />
+                  <Select value={formData.product_id} onValueChange={(value) => setFormData({ ...formData, product_id: value })}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Chọn sản phẩm" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {products.map((product) => (
+                        <SelectItem key={product.id} value={product.id}>
+                          {product.name_ko} - {product.name_en}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="installation_date">Ngày lắp đặt</Label>
+                  <Label htmlFor="installation_date">Năm lắp đặt</Label>
                   <Input
                     id="installation_date"
+                    type="number"
+                    min="1980"
+                    max="2050"
                     value={formData.installation_date}
                     onChange={(e) => setFormData({ ...formData, installation_date: e.target.value })}
-                    placeholder="VD: 2024-01-15"
+                    placeholder="VD: 2024"
                   />
                 </div>
                 
@@ -224,7 +235,8 @@ const SerialNumberManager = () => {
                     id="location"
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    placeholder="VD: Seoul Tower Building"
+                    placeholder="KOREA"
+                    disabled
                   />
                 </div>
                 
@@ -301,7 +313,12 @@ const SerialNumberManager = () => {
                       <TableCell className="font-mono font-medium">
                         {serialNumber.serial_number}
                       </TableCell>
-                      <TableCell>{serialNumber.product_id || '-'}</TableCell>
+                       <TableCell>
+                         {serialNumber.product_id ? 
+                           products.find(p => p.id === serialNumber.product_id)?.name_ko || serialNumber.product_id 
+                           : '-'
+                         }
+                       </TableCell>
                       <TableCell>{serialNumber.installation_date || '-'}</TableCell>
                       <TableCell>{serialNumber.location || '-'}</TableCell>
                       <TableCell>
