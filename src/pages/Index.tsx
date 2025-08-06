@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/home/hero-section";
 import { SerialSearchSection } from "@/components/home/serial-search-section";
 import { FeaturedProducts } from "@/components/home/featured-products";
+import { ServicesSection } from "@/components/home/services-section";
 import { useLanguage } from "@/hooks/use-language";
 
 const Index = () => {
@@ -17,6 +18,7 @@ const Index = () => {
         <HeroSection language={language} />
         <SerialSearchSection language={language} />
         <FeaturedProducts language={language} />
+        <ServicesSection language={language} />
       </main>
       
       <Footer language={language} />

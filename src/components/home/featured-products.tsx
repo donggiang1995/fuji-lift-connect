@@ -2,6 +2,7 @@ import React from "react";
 import { ArrowRight, Zap, Shield, Settings, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 import controlSystemImg from "@/assets/control-system.jpg";
 import tractionMachineImg from "@/assets/traction-machine.jpg";
 
@@ -91,6 +92,7 @@ const iconMap = {
 
 export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
   const t = content[language];
+  const navigate = useNavigate();
 
   return (
     <section className="py-20 bg-muted/30">
@@ -161,9 +163,12 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
           ))}
         </div>
 
-        {/* View All Button */}
         <div className="text-center">
-          <Button size="lg" className="btn-industrial">
+          <Button 
+            size="lg" 
+            className="btn-industrial"
+            onClick={() => navigate('/products')}
+          >
             {t.viewAll}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
