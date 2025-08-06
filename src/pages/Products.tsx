@@ -9,10 +9,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Cpu, Cog, Zap, Shield, Settings, MonitorSpeaker } from "lucide-react";
+import { ProductSearch } from "@/components/ui/product-search";
 
 const Products = () => {
   const { language, setLanguage } = useLanguage();
   const { products, categories, loading } = useProducts();
+  const [filteredProducts, setFilteredProducts] = React.useState(products);
 
   const content = {
     ko: {
@@ -165,6 +167,15 @@ const Products = () => {
         {/* Products Section */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
+            {/* Search and Filter */}
+            <div className="mb-8">
+              <ProductSearch 
+                products={products}
+                categories={categories}
+                onProductsFilter={setFilteredProducts}
+              />
+            </div>
+            
             {categories.length > 0 ? (
               <Tabs defaultValue={categories[0]?.id} className="w-full">
                 <TabsList className="grid w-full grid-cols-2 mb-8">
@@ -179,7 +190,7 @@ const Products = () => {
                 {categories.map((category) => (
                   <TabsContent key={category.id} value={category.id}>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {products
+                      {filteredProducts
                         .filter(product => product.category_id === category.id)
                         .map((product) => (
                           <Card key={product.id} className="industrial-card hover:shadow-lg transition-shadow">

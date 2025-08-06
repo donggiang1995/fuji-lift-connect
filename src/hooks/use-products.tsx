@@ -10,7 +10,7 @@ export interface Product {
   description_en: string;
   image_url: string;
   category_id: string;
-  specifications: Record<string, any>;
+  specifications: any;
   features_ko: string[];
   features_en: string[];
   price: number | null;

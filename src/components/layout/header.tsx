@@ -14,14 +14,20 @@ interface HeaderProps {
 const navigation = {
   ko: [
     { name: '홈', href: '/' },
-    { name: '회사소개', href: '/about' },
     { name: '제품', href: '/products' },
+    { name: '서비스', href: '/services' },
+    { name: '회사소개', href: '/about' },
+    { name: '뉴스', href: '/news' },
+    { name: '채용', href: '/careers' },
     { name: '문의', href: '/contact' },
   ],
   en: [
     { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
     { name: 'Products', href: '/products' },
+    { name: 'Services', href: '/services' },
+    { name: 'About', href: '/about' },
+    { name: 'News', href: '/news' },
+    { name: 'Careers', href: '/careers' },
     { name: 'Contact', href: '/contact' },
   ]
 };
