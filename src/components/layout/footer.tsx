@@ -46,7 +46,7 @@ export const Footer = ({ language }: FooterProps) => {
   const t = content[language];
 
   return (
-    <footer className="relative bg-steel-dark text-white overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-blue-600 to-blue-800 text-white overflow-hidden">
       <div 
         className="absolute inset-0 opacity-5 bg-cover bg-center"
         style={{ backgroundImage: `url(${worldMapBg})` }}

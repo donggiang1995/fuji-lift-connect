@@ -2,6 +2,8 @@ import React from "react";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-bg.jpg";
+import elevatorInstallation from "@/assets/elevator-installation.jpg";
+import elevatorControlRoom from "@/assets/elevator-control-room.jpg";
 interface HeroSectionProps {
   language: 'ko' | 'en';
 }
@@ -87,7 +89,7 @@ export const HeroSection = ({
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
             {t.stats.map((stat, index) => <div key={index} className="metric-display rounded-lg p-6 glass-morphism bg-slate-800">
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
                   {stat.number}
@@ -96,6 +98,42 @@ export const HeroSection = ({
                   {stat.label}
                 </div>
               </div>)}
+          </div>
+
+          {/* Featured Images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="relative group overflow-hidden rounded-lg">
+              <img 
+                src={elevatorInstallation} 
+                alt="Elevator Installation" 
+                className="w-full h-64 object-cover transition-transform group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 text-white">
+                <h4 className="font-bold text-lg">
+                  {language === 'ko' ? '전문 설치 서비스' : 'Professional Installation'}
+                </h4>
+                <p className="text-sm text-gray-200">
+                  {language === 'ko' ? '최첨단 기술로 안전한 설치' : 'Safe installation with cutting-edge technology'}
+                </p>
+              </div>
+            </div>
+            <div className="relative group overflow-hidden rounded-lg">
+              <img 
+                src={elevatorControlRoom} 
+                alt="Control Room" 
+                className="w-full h-64 object-cover transition-transform group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 text-white">
+                <h4 className="font-bold text-lg">
+                  {language === 'ko' ? '첨단 제어 시스템' : 'Advanced Control Systems'}
+                </h4>
+                <p className="text-sm text-gray-200">
+                  {language === 'ko' ? '스마트 모니터링 및 제어' : 'Smart monitoring and control'}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

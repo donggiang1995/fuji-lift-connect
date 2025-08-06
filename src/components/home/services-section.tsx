@@ -3,6 +3,8 @@ import { ArrowRight, Wrench, Settings, Zap, Phone, Users, Shield } from "lucide-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import elevatorInterior from "@/assets/elevator-interior.jpg";
+import elevatorShaft from "@/assets/elevator-shaft.jpg";
 
 interface ServicesSectionProps {
   language: 'ko' | 'en';
@@ -140,6 +142,42 @@ export const ServicesSection = ({ language }: ServicesSectionProps) => {
               </Card>
             );
           })}
+        </div>
+
+        {/* Service Images */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="relative group overflow-hidden rounded-lg">
+            <img 
+              src={elevatorInterior} 
+              alt="Elevator Interior" 
+              className="w-full h-80 object-cover transition-transform group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <div className="absolute bottom-6 left-6 text-white">
+              <h4 className="font-bold text-xl mb-2">
+                {language === 'ko' ? '고급 엘리베이터 인테리어' : 'Premium Elevator Interior'}
+              </h4>
+              <p className="text-gray-200">
+                {language === 'ko' ? '현대적이고 세련된 디자인으로 편안한 승차감을 제공합니다' : 'Modern and sophisticated design providing comfortable ride experience'}
+              </p>
+            </div>
+          </div>
+          <div className="relative group overflow-hidden rounded-lg">
+            <img 
+              src={elevatorShaft} 
+              alt="Elevator Shaft" 
+              className="w-full h-80 object-cover transition-transform group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <div className="absolute bottom-6 left-6 text-white">
+              <h4 className="font-bold text-xl mb-2">
+                {language === 'ko' ? '첨단 견인기 시스템' : 'Advanced Traction System'}
+              </h4>
+              <p className="text-gray-200">
+                {language === 'ko' ? '최첨단 기술로 안전하고 효율적인 운행을 보장합니다' : 'Ensuring safe and efficient operation with cutting-edge technology'}
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* View All Services Button */}
