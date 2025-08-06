@@ -181,6 +181,72 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      serial_numbers: {
+        Row: {
+          created_at: string
+          id: string
+          manufacture_date: string | null
+          model: string | null
+          notes: string | null
+          product_name: string | null
+          serial_number: string
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          manufacture_date?: string | null
+          model?: string | null
+          notes?: string | null
+          product_name?: string | null
+          serial_number: string
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          manufacture_date?: string | null
+          model?: string | null
+          notes?: string | null
+          product_name?: string | null
+          serial_number?: string
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

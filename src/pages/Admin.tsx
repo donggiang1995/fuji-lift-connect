@@ -1,24 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { useLanguage } from "@/hooks/use-language";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
+import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/hooks/use-language';
+import { useAuth } from '@/hooks/use-auth';
+import { useToast } from '@/hooks/use-toast';
+import SerialNumberManager from '@/components/admin/serial-number-manager';
 import { 
+  LayoutDashboard, 
   Package, 
   MessageSquare, 
-  Eye, 
+  FolderOpen, 
   Trash2, 
+  Eye, 
+  EyeOff,
+  Mail,
+  Building,
+  Calendar,
+  User,
+  LogOut,
+  Shield,
+  Hash,
   Plus,
   Settings
-} from "lucide-react";
+} from 'lucide-react';
 
 const Admin = () => {
   const { language, setLanguage } = useLanguage();
+  const { user, profile, loading: authLoading, signOut, isAdmin } = useAuth();
+  const navigate = useNavigate();
   const { toast } = useToast();
   
   const [products, setProducts] = useState<any[]>([]);
@@ -26,14 +43,36 @@ const Admin = () => {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Redirect to auth page if not logged in
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/auth');
+    }
+  }, [user, authLoading, navigate]);
+
+  // Show access denied if not admin
+  useEffect(() => {
+    if (!authLoading && user && profile && !isAdmin) {
+      toast({
+        title: 'Truy cập bị từ chối',
+        description: 'Bạn không có quyền truy cập trang này',
+        variant: 'destructive'
+      });
+      navigate('/');
+    }
+  }, [profile, isAdmin, authLoading, user, navigate, toast]);
+
   const content = {
     ko: {
       title: "관리자 패널",
       subtitle: "웹사이트 콘텐츠 및 데이터 관리",
+      welcome: "환영합니다",
+      logout: "로그아웃",
       tabs: {
         products: "제품 관리",
         inquiries: "문의 관리",
-        categories: "카테고리 관리"
+        categories: "카테고리 관리",
+        serials: "시리얼 번호 관리"
       },
       products: {
         title: "제품 목록",
@@ -71,10 +110,13 @@ const Admin = () => {
     en: {
       title: "Admin Panel",
       subtitle: "Manage website content and data",
+      welcome: "Welcome",
+      logout: "Logout",
       tabs: {
         products: "Product Management",
         inquiries: "Inquiry Management", 
-        categories: "Category Management"
+        categories: "Category Management",
+        serials: "Serial Number Management"
       },
       products: {
         title: "Product List",
@@ -211,9 +253,33 @@ const Admin = () => {
     }
   };
 
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (user && isAdmin) {
+      fetchData();
+    }
+  }, [user, isAdmin]);
+
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <Shield className="h-12 w-12 mx-auto mb-4 text-primary animate-pulse" />
+          <p className="text-lg">Đang kiểm tra quyền truy cập...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render if not authenticated or not admin
+  if (!user || !isAdmin) {
+    return null;
+  }
 
   if (loading) {
     return (
@@ -235,10 +301,26 @@ const Admin = () => {
       
       <main className="pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-primary via-primary-dark to-steel-dark">
-          <div className="container mx-auto px-4 text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">{t.title}</h1>
-            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">{t.subtitle}</p>
+        <section className="py-12 bg-gradient-to-br from-primary via-primary-dark to-steel-dark">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-between items-center text-white">
+              <div>
+                <h1 className="text-3xl md:text-5xl font-bold mb-4">{t.title}</h1>
+                <p className="text-lg md:text-xl text-white/90">{t.subtitle}</p>
+                <div className="flex items-center gap-2 mt-4">
+                  <User className="h-5 w-5" />
+                  <span>{t.welcome}, {profile?.full_name || user?.email}</span>
+                  <Badge variant="secondary" className="ml-2">
+                    <Shield className="h-3 w-3 mr-1" />
+                    Admin
+                  </Badge>
+                </div>
+              </div>
+              <Button variant="outline" onClick={handleSignOut} className="text-white border-white hover:bg-white hover:text-primary">
+                <LogOut className="h-4 w-4 mr-2" />
+                {t.logout}
+              </Button>
+            </div>
           </div>
         </section>
 
@@ -246,18 +328,22 @@ const Admin = () => {
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <Tabs defaultValue="products" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-8">
-                <TabsTrigger value="products" className="text-lg py-3">
-                  <Package className="h-5 w-5 mr-2" />
+              <TabsList className="grid w-full grid-cols-4 mb-8">
+                <TabsTrigger value="products" className="text-sm md:text-base py-3">
+                  <Package className="h-4 w-4 mr-2" />
                   {t.tabs.products}
                 </TabsTrigger>
-                <TabsTrigger value="inquiries" className="text-lg py-3">
-                  <MessageSquare className="h-5 w-5 mr-2" />
+                <TabsTrigger value="inquiries" className="text-sm md:text-base py-3">
+                  <MessageSquare className="h-4 w-4 mr-2" />
                   {t.tabs.inquiries}
                 </TabsTrigger>
-                <TabsTrigger value="categories" className="text-lg py-3">
-                  <Settings className="h-5 w-5 mr-2" />
+                <TabsTrigger value="categories" className="text-sm md:text-base py-3">
+                  <Settings className="h-4 w-4 mr-2" />
                   {t.tabs.categories}
+                </TabsTrigger>
+                <TabsTrigger value="serials" className="text-sm md:text-base py-3">
+                  <Hash className="h-4 w-4 mr-2" />
+                  {t.tabs.serials}
                 </TabsTrigger>
               </TabsList>
 
@@ -273,47 +359,45 @@ const Admin = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="border-b">
-                            <th className="text-left py-2">{t.products.name}</th>
-                            <th className="text-left py-2">{t.products.category}</th>
-                            <th className="text-left py-2">{t.products.status}</th>
-                            <th className="text-left py-2">{t.products.actions}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>{t.products.name}</TableHead>
+                            <TableHead>{t.products.category}</TableHead>
+                            <TableHead>{t.products.status}</TableHead>
+                            <TableHead>{t.products.actions}</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
                           {products.map((product) => (
-                            <tr key={product.id} className="border-b">
-                              <td className="py-3">
+                            <TableRow key={product.id}>
+                              <TableCell>
                                 {language === 'ko' ? product.name_ko : product.name_en}
-                              </td>
-                              <td className="py-3">
+                              </TableCell>
+                              <TableCell>
                                 {product.category ? 
                                   (language === 'ko' ? product.category.name_ko : product.category.name_en)
                                   : 'N/A'
                                 }
-                              </td>
-                              <td className="py-3">
+                              </TableCell>
+                              <TableCell>
                                 <Badge variant={product.is_active ? "default" : "secondary"}>
                                   {product.is_active ? t.products.active : t.products.inactive}
                                 </Badge>
-                              </td>
-                              <td className="py-3">
-                                <div className="flex space-x-2">
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    onClick={() => toggleProductStatus(product.id, product.is_active)}
-                                  >
-                                    <Eye className="h-4 w-4" />
-                                  </Button>
-                                </div>
-                              </td>
-                            </tr>
+                              </TableCell>
+                              <TableCell>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => toggleProductStatus(product.id, product.is_active)}
+                                >
+                                  {product.is_active ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                </Button>
+                              </TableCell>
+                            </TableRow>
                           ))}
-                        </tbody>
-                      </table>
+                        </TableBody>
+                      </Table>
                     </div>
                   </CardContent>
                 </Card>
@@ -327,36 +411,72 @@ const Admin = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {inquiries.map((inquiry) => (
-                        <Card key={inquiry.id} className="border">
-                          <CardContent className="p-4">
-                            <div className="grid md:grid-cols-2 gap-4">
-                              <div>
-                                <p><strong>{t.inquiries.name}:</strong> {inquiry.name}</p>
-                                <p><strong>{t.inquiries.email}:</strong> {inquiry.email}</p>
-                                {inquiry.company && (
-                                  <p><strong>{t.inquiries.company}:</strong> {inquiry.company}</p>
-                                )}
-                                <p><strong>{t.inquiries.date}:</strong> {new Date(inquiry.created_at).toLocaleDateString()}</p>
-                              </div>
-                              <div>
-                                <p><strong>{t.inquiries.message}:</strong></p>
-                                <p className="text-muted-foreground mt-1">{inquiry.message}</p>
-                                <div className="flex justify-end mt-4">
-                                  <Button
-                                    size="sm"
-                                    variant="destructive"
-                                    onClick={() => handleDeleteInquiry(inquiry.id)}
-                                  >
-                                    <Trash2 className="h-4 w-4 mr-1" />
-                                    {t.actions.delete}
-                                  </Button>
+                      {inquiries.length === 0 ? (
+                        <div className="text-center py-8 text-muted-foreground">
+                          Chưa có văn bản liên hệ nào
+                        </div>
+                      ) : (
+                        inquiries.map((inquiry) => (
+                          <Card key={inquiry.id} className="border">
+                            <CardContent className="p-4">
+                              <div className="grid md:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                  <div className="flex items-center gap-2">
+                                    <User className="h-4 w-4" />
+                                    <span className="font-medium">{inquiry.name}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <Mail className="h-4 w-4" />
+                                    <span>{inquiry.email}</span>
+                                  </div>
+                                  {inquiry.company && (
+                                    <div className="flex items-center gap-2">
+                                      <Building className="h-4 w-4" />
+                                      <span>{inquiry.company}</span>
+                                    </div>
+                                  )}
+                                  <div className="flex items-center gap-2">
+                                    <Calendar className="h-4 w-4" />
+                                    <span>{new Date(inquiry.created_at).toLocaleDateString()}</span>
+                                  </div>
+                                </div>
+                                <div>
+                                  <div className="mb-2">
+                                    <strong>{t.inquiries.message}:</strong>
+                                  </div>
+                                  <p className="text-muted-foreground mb-4 p-3 bg-muted rounded">
+                                    {inquiry.message}
+                                  </p>
+                                  <div className="flex justify-end">
+                                    <AlertDialog>
+                                      <AlertDialogTrigger asChild>
+                                        <Button size="sm" variant="destructive">
+                                          <Trash2 className="h-4 w-4 mr-1" />
+                                          {t.actions.delete}
+                                        </Button>
+                                      </AlertDialogTrigger>
+                                      <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                          <AlertDialogTitle>Xác nhận xóa</AlertDialogTitle>
+                                          <AlertDialogDescription>
+                                            Bạn có chắc chắn muốn xóa văn bản liên hệ này? Hành động này không thể hoàn tác.
+                                          </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                          <AlertDialogCancel>Hủy</AlertDialogCancel>
+                                          <AlertDialogAction onClick={() => handleDeleteInquiry(inquiry.id)}>
+                                            Xóa
+                                          </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                      </AlertDialogContent>
+                                    </AlertDialog>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
+                            </CardContent>
+                          </Card>
+                        ))
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -374,37 +494,42 @@ const Admin = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="border-b">
-                            <th className="text-left py-2">{t.categories.name}</th>
-                            <th className="text-left py-2">{t.categories.description}</th>
-                            <th className="text-left py-2">{t.categories.icon}</th>
-                            <th className="text-left py-2">{t.categories.status}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>{t.categories.name}</TableHead>
+                            <TableHead>{t.categories.description}</TableHead>
+                            <TableHead>{t.categories.icon}</TableHead>
+                            <TableHead>{t.categories.status}</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
                           {categories.map((category) => (
-                            <tr key={category.id} className="border-b">
-                              <td className="py-3">
+                            <TableRow key={category.id}>
+                              <TableCell>
                                 {language === 'ko' ? category.name_ko : category.name_en}
-                              </td>
-                              <td className="py-3">
+                              </TableCell>
+                              <TableCell>
                                 {language === 'ko' ? category.description_ko : category.description_en}
-                              </td>
-                              <td className="py-3">{category.icon}</td>
-                              <td className="py-3">
+                              </TableCell>
+                              <TableCell>{category.icon}</TableCell>
+                              <TableCell>
                                 <Badge variant={category.is_active ? "default" : "secondary"}>
                                   {category.is_active ? t.products.active : t.products.inactive}
                                 </Badge>
-                              </td>
-                            </tr>
+                              </TableCell>
+                            </TableRow>
                           ))}
-                        </tbody>
-                      </table>
+                        </TableBody>
+                      </Table>
                     </div>
                   </CardContent>
                 </Card>
+              </TabsContent>
+
+              {/* Serial Numbers Tab */}
+              <TabsContent value="serials">
+                <SerialNumberManager />
               </TabsContent>
             </Tabs>
           </div>
