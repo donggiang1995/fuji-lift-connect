@@ -1,6 +1,7 @@
 import React from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
-import fujiLogo from "@/assets/fuji-logo.png";
+import fujiLogo from "@/assets/fuji-logo-new.png";
+import worldMapBg from "@/assets/world-map-bg.png";
 
 interface FooterProps {
   language: 'ko' | 'en';
@@ -45,8 +46,12 @@ export const Footer = ({ language }: FooterProps) => {
   const t = content[language];
 
   return (
-    <footer className="bg-steel-dark text-white">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="relative bg-steel-dark text-white overflow-hidden">
+      <div 
+        className="absolute inset-0 opacity-5 bg-cover bg-center"
+        style={{ backgroundImage: `url(${worldMapBg})` }}
+      />
+      <div className="relative container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-2">

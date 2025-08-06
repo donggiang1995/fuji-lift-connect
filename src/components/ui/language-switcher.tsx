@@ -1,12 +1,12 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Globe } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import flagsImage from "@/assets/flags.png";
 
 interface LanguageSwitcherProps {
   currentLang: 'ko' | 'en';
@@ -17,23 +17,39 @@ export const LanguageSwitcher = ({ currentLang, onLanguageChange }: LanguageSwit
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="glass-morphism">
-          <Globe className="h-4 w-4 mr-2" />
-          {currentLang === 'ko' ? '한국어' : 'English'}
+        <Button variant="ghost" size="sm" className="glass-morphism p-2">
+          <div className="w-6 h-4 bg-cover bg-center rounded-sm" 
+               style={{ 
+                 backgroundImage: `url(${flagsImage})`,
+                 backgroundPosition: currentLang === 'ko' ? 'left center' : 'right center'
+               }} 
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="glass-morphism">
         <DropdownMenuItem 
           onClick={() => onLanguageChange('ko')}
-          className={currentLang === 'ko' ? 'bg-primary text-primary-foreground' : ''}
+          className={`flex items-center space-x-2 ${currentLang === 'ko' ? 'bg-primary text-primary-foreground' : ''}`}
         >
-          한국어
+          <div className="w-5 h-3 bg-cover bg-center rounded-sm" 
+               style={{ 
+                 backgroundImage: `url(${flagsImage})`,
+                 backgroundPosition: 'left center'
+               }} 
+          />
+          <span>한국어</span>
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => onLanguageChange('en')}
-          className={currentLang === 'en' ? 'bg-primary text-primary-foreground' : ''}
+          className={`flex items-center space-x-2 ${currentLang === 'en' ? 'bg-primary text-primary-foreground' : ''}`}
         >
-          English
+          <div className="w-5 h-3 bg-cover bg-center rounded-sm" 
+               style={{ 
+                 backgroundImage: `url(${flagsImage})`,
+                 backgroundPosition: 'right center'
+               }} 
+          />
+          <span>English</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

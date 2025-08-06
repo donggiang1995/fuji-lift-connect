@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { SerialSearch } from "@/components/ui/serial-search";
-import fujiLogo from "@/assets/fuji-logo.png";
+import fujiLogo from "@/assets/fuji-logo-new.png";
 
 interface HeaderProps {
   language: 'ko' | 'en';
