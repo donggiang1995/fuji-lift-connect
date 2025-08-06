@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { useLanguage } from "@/hooks/use-language";
+import { useContact } from "@/hooks/use-contact";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,14 +13,13 @@ import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
 
 const Contact = () => {
   const { language, setLanguage } = useLanguage();
-  const { toast } = useToast();
+  const { submitContactForm, isSubmitting } = useContact();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     company: "",
     message: ""
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const content = {
     ko: {
@@ -92,34 +92,13 @@ const Contact = () => {
     e.preventDefault();
     
     if (!formData.name || !formData.email || !formData.message) {
-      toast({
-        title: "Error",
-        description: t.required,
-        variant: "destructive"
-      });
       return;
     }
 
-    setIsSubmitting(true);
+    const result = await submitContactForm(formData);
     
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Success",
-        description: t.success
-      });
-      
+    if (result.success) {
       setFormData({ name: "", email: "", company: "", message: "" });
-    } catch (error) {
-      toast({
-        title: "Error", 
-        description: t.error,
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { useLanguage } from "@/hooks/use-language";
+import { useProducts } from "@/hooks/use-products";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,6 +12,7 @@ import { Cpu, Cog, Zap, Shield, Settings, MonitorSpeaker } from "lucide-react";
 
 const Products = () => {
   const { language, setLanguage } = useLanguage();
+  const { products, categories, loading } = useProducts();
 
   const content = {
     ko: {
@@ -132,11 +134,20 @@ const Products = () => {
   };
 
   const t = content[language];
-  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const getIcon = (category: string) => {
-    return category === 'control' ? Cpu : Cog;
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header language={language} onLanguageChange={setLanguage} />
+        <main className="pt-16 md:pt-20">
+          <div className="container mx-auto px-4 py-8 text-center">
+            <div className="text-xl">Loading products...</div>
+          </div>
+        </main>
+        <Footer language={language} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -154,134 +165,114 @@ const Products = () => {
         {/* Products Section */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
-            <Tabs defaultValue="control" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger value="control" className="text-lg py-3">
-                  <Cpu className="h-5 w-5 mr-2" />
-                  {t.tabs.control}
-                </TabsTrigger>
-                <TabsTrigger value="traction" className="text-lg py-3">
-                  <Cog className="h-5 w-5 mr-2" />
-                  {t.tabs.traction}
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="control">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {t.products.control.map((product) => (
-                    <Card key={product.id} className="industrial-card hover:shadow-lg transition-shadow">
-                      <CardContent className="p-6">
-                        <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-                          <MonitorSpeaker className="h-16 w-16 text-muted-foreground" />
-                        </div>
-                        <h3 className="text-xl font-bold mb-3">{product.name}</h3>
-                        <p className="text-muted-foreground mb-4 line-clamp-3">{product.description}</p>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {product.features.slice(0, 2).map((feature, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-xs">{feature}</Badge>
-                          ))}
-                        </div>
-                        <Dialog>
-                            <DialogTrigger asChild>
-                              <Button variant="outline" className="w-full">
-                                {t.viewDetails}
-                              </Button>
-                            </DialogTrigger>
-                          <DialogContent className="max-w-3xl">
-                            <DialogHeader>
-                              <DialogTitle className="text-2xl">{product.name}</DialogTitle>
-                            </DialogHeader>
-                            <div className="grid md:grid-cols-2 gap-6">
-                              <div>
-                                <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-                                  <MonitorSpeaker className="h-24 w-24 text-muted-foreground" />
-                                </div>
-                                <p className="text-muted-foreground">{product.description}</p>
-                              </div>
-                              <div>
-                                <h4 className="font-bold mb-3">{language === 'ko' ? '주요 사양' : 'Specifications'}</h4>
-                                <div className="space-y-2 mb-6">
-                                   {Object.entries(product.specifications).map(([key, value]) => (
-                                     <div key={key} className="flex justify-between">
-                                       <span className="text-muted-foreground">{key}:</span>
-                                       <span>{String(value)}</span>
-                                     </div>
-                                   ))}
-                                </div>
-                                <h4 className="font-bold mb-3">{language === 'ko' ? '주요 기능' : 'Features'}</h4>
-                                <div className="flex flex-wrap gap-2">
-                                  {product.features.map((feature, idx) => (
-                                    <Badge key={idx} variant="secondary">{feature}</Badge>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </CardContent>
-                    </Card>
+            {categories.length > 0 ? (
+              <Tabs defaultValue={categories[0]?.id} className="w-full">
+                <TabsList className="grid w-full grid-cols-2 mb-8">
+                  {categories.slice(0, 2).map((category) => (
+                    <TabsTrigger key={category.id} value={category.id} className="text-lg py-3">
+                      <Cpu className="h-5 w-5 mr-2" />
+                      {language === 'ko' ? category.name_ko : category.name_en}
+                    </TabsTrigger>
                   ))}
-                </div>
-              </TabsContent>
+                </TabsList>
 
-              <TabsContent value="traction">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {t.products.traction.map((product) => (
-                    <Card key={product.id} className="industrial-card hover:shadow-lg transition-shadow">
-                      <CardContent className="p-6">
-                        <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-                          <Cog className="h-16 w-16 text-muted-foreground" />
-                        </div>
-                        <h3 className="text-xl font-bold mb-3">{product.name}</h3>
-                        <p className="text-muted-foreground mb-4 line-clamp-3">{product.description}</p>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {product.features.slice(0, 2).map((feature, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-xs">{feature}</Badge>
-                          ))}
-                        </div>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button variant="outline" className="w-full">
-                              {t.viewDetails}
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-3xl">
-                            <DialogHeader>
-                              <DialogTitle className="text-2xl">{product.name}</DialogTitle>
-                            </DialogHeader>
-                            <div className="grid md:grid-cols-2 gap-6">
-                              <div>
-                                <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-                                  <Cog className="h-24 w-24 text-muted-foreground" />
-                                </div>
-                                <p className="text-muted-foreground">{product.description}</p>
+                {categories.map((category) => (
+                  <TabsContent key={category.id} value={category.id}>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {products
+                        .filter(product => product.category_id === category.id)
+                        .map((product) => (
+                          <Card key={product.id} className="industrial-card hover:shadow-lg transition-shadow">
+                            <CardContent className="p-6">
+                              <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
+                                {product.image_url ? (
+                                  <img 
+                                    src={product.image_url} 
+                                    alt={language === 'ko' ? product.name_ko : product.name_en}
+                                    className="w-full h-full object-cover rounded-lg"
+                                  />
+                                ) : (
+                                  <MonitorSpeaker className="h-16 w-16 text-muted-foreground" />
+                                )}
                               </div>
-                              <div>
-                                <h4 className="font-bold mb-3">{language === 'ko' ? '주요 사양' : 'Specifications'}</h4>
-                                <div className="space-y-2 mb-6">
-                                   {Object.entries(product.specifications).map(([key, value]) => (
-                                     <div key={key} className="flex justify-between">
-                                       <span className="text-muted-foreground">{key}:</span>
-                                       <span>{String(value)}</span>
-                                     </div>
-                                   ))}
-                                </div>
-                                <h4 className="font-bold mb-3">{language === 'ko' ? '주요 기능' : 'Features'}</h4>
-                                <div className="flex flex-wrap gap-2">
-                                  {product.features.map((feature, idx) => (
-                                    <Badge key={idx} variant="secondary">{feature}</Badge>
+                              <h3 className="text-xl font-bold mb-3">
+                                {language === 'ko' ? product.name_ko : product.name_en}
+                              </h3>
+                              <p className="text-muted-foreground mb-4 line-clamp-3">
+                                {language === 'ko' ? product.description_ko : product.description_en}
+                              </p>
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                {(language === 'ko' ? product.features_ko : product.features_en)
+                                  ?.slice(0, 2).map((feature, idx) => (
+                                    <Badge key={idx} variant="secondary" className="text-xs">{feature}</Badge>
                                   ))}
-                                </div>
                               </div>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button variant="outline" className="w-full">
+                                    {t.viewDetails}
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-3xl">
+                                  <DialogHeader>
+                                    <DialogTitle className="text-2xl">
+                                      {language === 'ko' ? product.name_ko : product.name_en}
+                                    </DialogTitle>
+                                  </DialogHeader>
+                                  <div className="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                      <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
+                                        {product.image_url ? (
+                                          <img 
+                                            src={product.image_url} 
+                                            alt={language === 'ko' ? product.name_ko : product.name_en}
+                                            className="w-full h-full object-cover rounded-lg"
+                                          />
+                                        ) : (
+                                          <MonitorSpeaker className="h-24 w-24 text-muted-foreground" />
+                                        )}
+                                      </div>
+                                      <p className="text-muted-foreground">
+                                        {language === 'ko' ? product.description_ko : product.description_en}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <h4 className="font-bold mb-3">
+                                        {language === 'ko' ? '주요 사양' : 'Specifications'}
+                                      </h4>
+                                      <div className="space-y-2 mb-6">
+                                        {Object.entries(product.specifications || {}).map(([key, value]) => (
+                                          <div key={key} className="flex justify-between">
+                                            <span className="text-muted-foreground">{key}:</span>
+                                            <span>{String(value)}</span>
+                                          </div>
+                                        ))}
+                                      </div>
+                                      <h4 className="font-bold mb-3">
+                                        {language === 'ko' ? '주요 기능' : 'Features'}
+                                      </h4>
+                                      <div className="flex flex-wrap gap-2">
+                                        {(language === 'ko' ? product.features_ko : product.features_en)
+                                          ?.map((feature, idx) => (
+                                            <Badge key={idx} variant="secondary">{feature}</Badge>
+                                          ))}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
+                            </CardContent>
+                          </Card>
+                        ))}
+                    </div>
+                  </TabsContent>
+                ))}
+              </Tabs>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground">No products available</p>
+              </div>
+            )}
           </div>
         </section>
       </main>
