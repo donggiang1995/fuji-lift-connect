@@ -270,13 +270,18 @@ export const SerialSearch = ({ placeholder, onSearch, language = 'en' }: SerialS
                     </div>
                     
                     {/* Small product image in bottom right corner */}
-                    <div className="absolute bottom-4 right-4">
-                      <img 
-                        src="/lovable-uploads/ed5049fa-e594-4bc3-87e3-ac19dc0a1789.png"
-                        alt="Product image"
-                        className="w-16 h-16 object-cover rounded-lg opacity-70 hover:opacity-100 transition-opacity"
-                      />
-                    </div>
+                    {result.product.image_url && (
+                      <div className="absolute bottom-4 right-4">
+                        <img 
+                          src={result.product.image_url}
+                          alt={validLanguage === 'ko' ? result.product.name_ko : result.product.name_en}
+                          className="w-32 h-32 object-cover rounded-lg opacity-70 hover:opacity-100 transition-opacity"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               )}
