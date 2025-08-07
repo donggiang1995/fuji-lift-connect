@@ -67,7 +67,7 @@ export const HeroSection = ({
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
               <span className="block">{t.title}</span>
-              <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-white-400 to-orange-400">
+              <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
                 {t.titleHighlight}
               </span>
             </h1>
