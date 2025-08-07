@@ -16,6 +16,24 @@ const Products = () => {
   const { products, categories, loading } = useProducts();
   const [filteredProducts, setFilteredProducts] = React.useState(products);
 
+  // Helper function to convert imgbb share URLs to direct image URLs
+  const getDirectImageUrl = (url: string) => {
+    if (!url) return null;
+    
+    // If it's already a direct image URL, return as is
+    if (url.includes('i.ibb.co') || url.includes('.jpg') || url.includes('.png') || url.includes('.jpeg')) {
+      return url;
+    }
+    
+    // Convert imgbb share URL to direct URL
+    if (url.includes('ibb.co/')) {
+      const imageId = url.split('ibb.co/')[1];
+      return `https://i.ibb.co/${imageId}/image.png`;
+    }
+    
+    return url;
+  };
+
   const content = {
     ko: {
       title: "제품",
@@ -199,16 +217,19 @@ const Products = () => {
                         .map((product) => (
                           <Card key={product.id} className="industrial-card hover:shadow-lg transition-shadow">
                             <CardContent className="p-6">
-                              <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
+                              <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
                                 {product.image_url ? (
                                   <img 
-                                    src={product.image_url} 
+                                    src={getDirectImageUrl(product.image_url) || product.image_url} 
                                     alt={language === 'ko' ? product.name_ko : product.name_en}
                                     className="w-full h-full object-cover rounded-lg"
+                                    onError={(e) => {
+                                      e.currentTarget.style.display = 'none';
+                                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                                    }}
                                   />
-                                ) : (
-                                  <MonitorSpeaker className="h-16 w-16 text-muted-foreground" />
-                                )}
+                                ) : null}
+                                <MonitorSpeaker className={`h-16 w-16 text-muted-foreground ${product.image_url ? 'hidden' : ''}`} />
                               </div>
                               <h3 className="text-xl font-bold mb-3">
                                 {language === 'ko' ? product.name_ko : product.name_en}
@@ -236,17 +257,20 @@ const Products = () => {
                                   </DialogHeader>
                                   <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                      <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-                                        {product.image_url ? (
-                                          <img 
-                                            src={product.image_url} 
-                                            alt={language === 'ko' ? product.name_ko : product.name_en}
-                                            className="w-full h-full object-cover rounded-lg"
-                                          />
-                                        ) : (
-                                          <MonitorSpeaker className="h-24 w-24 text-muted-foreground" />
-                                        )}
-                                      </div>
+                                       <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                                         {product.image_url ? (
+                                           <img 
+                                             src={getDirectImageUrl(product.image_url) || product.image_url} 
+                                             alt={language === 'ko' ? product.name_ko : product.name_en}
+                                             className="w-full h-full object-cover rounded-lg"
+                                             onError={(e) => {
+                                               e.currentTarget.style.display = 'none';
+                                               e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                                             }}
+                                           />
+                                         ) : null}
+                                         <MonitorSpeaker className={`h-24 w-24 text-muted-foreground ${product.image_url ? 'hidden' : ''}`} />
+                                       </div>
                                       <p className="text-muted-foreground">
                                         {language === 'ko' ? product.description_ko : product.description_en}
                                       </p>
