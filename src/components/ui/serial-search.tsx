@@ -255,33 +255,37 @@ export const SerialSearch = ({ placeholder, onSearch, language = 'en' }: SerialS
                       </div>
                       
                       {/* Product Image */}
-                      {result.product.image_url && (
-                        <div className="ml-4 flex-shrink-0">
-                          <img 
-                            src={result.product.image_url} 
-                            alt={validLanguage === 'ko' ? result.product.name_ko : result.product.name_en}
-                            className="w-40 h-40 object-cover rounded-lg"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                            }}
-                          />
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* Small product image in bottom right corner */}
-                    {result.product.image_url && (
-                      <div className="absolute bottom-4 right-4">
+                      <div className="ml-4 flex-shrink-0">
                         <img 
-                          src={result.product.image_url}
+                          src={result.product.image_url || "/placeholder.svg"} 
                           alt={validLanguage === 'ko' ? result.product.name_ko : result.product.name_en}
-                          className="w-32 h-32 object-cover rounded-lg opacity-70 hover:opacity-100 transition-opacity"
+                          className="w-40 h-40 object-cover rounded-lg border-2 border-muted"
                           onError={(e) => {
-                            e.currentTarget.style.display = 'none';
+                            console.log('Product image failed to load:', result.product.image_url);
+                            e.currentTarget.src = "/placeholder.svg";
+                          }}
+                          onLoad={() => {
+                            console.log('Product image loaded successfully:', result.product.image_url);
                           }}
                         />
                       </div>
-                    )}
+                    </div>
+                    
+                    {/* Small product image in bottom right corner */}
+                    <div className="absolute bottom-4 right-4">
+                      <img 
+                        src={result.product.image_url || "/placeholder.svg"}
+                        alt={validLanguage === 'ko' ? result.product.name_ko : result.product.name_en}
+                        className="w-32 h-32 object-cover rounded-lg opacity-70 hover:opacity-100 transition-opacity border border-muted"
+                        onError={(e) => {
+                          console.log('Small product image failed to load:', result.product.image_url);
+                          e.currentTarget.src = "/placeholder.svg";
+                        }}
+                        onLoad={() => {
+                          console.log('Small product image loaded successfully:', result.product.image_url);
+                        }}
+                      />
+                    </div>
                   </CardContent>
                 </Card>
               )}
