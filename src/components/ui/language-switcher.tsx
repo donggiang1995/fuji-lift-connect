@@ -14,7 +14,7 @@ export const LanguageSwitcher = ({ currentLang, onLanguageChange }: LanguageSwit
       <Button 
         variant="ghost" 
         size="sm" 
-        className={`glass-morphism p-2 ${currentLang === 'ko' ? 'ring-2 ring-primary' : ''}`}
+        className={`glass-morphism p-2 ${currentLang === 'ko' ? 'ring-2 ring-white' : ''}`}
         onClick={() => onLanguageChange('ko')}
       >
         <div className="w-12 h-8 bg-cover bg-center rounded-sm" 
@@ -28,13 +28,12 @@ export const LanguageSwitcher = ({ currentLang, onLanguageChange }: LanguageSwit
       <Button 
         variant="ghost" 
         size="sm" 
-        className={`glass-morphism p-2 ${currentLang === 'en' ? 'ring-2 ring-primary' : ''}`}
+        className={`glass-morphism p-2 ${currentLang === 'en' ? 'ring-2 ring-white' : ''}`}
         onClick={() => onLanguageChange('en')}
       >
-        <div className="w-6 h-4 bg-cover bg-center rounded-sm" 
+        <div className="w-12 h-8 bg-cover bg-center rounded-sm" 
              style={{ 
-               backgroundImage: `url(${flagsImage})`,
-               backgroundPosition: 'right center'
+               backgroundImage: `url(/lovable-uploads/e3767485-d2a7-4edf-a7a1-95496e574aab.png)`
              }} 
         />
       </Button>
