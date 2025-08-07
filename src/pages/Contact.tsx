@@ -41,9 +41,9 @@ const Contact = () => {
       contact: {
         title: "연락처 정보",
         address: "주소",
-        addressValue: "서울특별시 강남구 테헤란로 123",
+        addressValue: "#1901, Building 102, Paragon, 361 Gwangnaru-ro, Gwangjin-gu, Seoul",
         phone: "전화번호",
-        phoneValue: "+82-2-1234-5678",
+        phoneValue: "+82 10 6488 6706",
         email: "이메일",
         emailValue: "info@fujiglobal.kr",
         hours: "운영시간",
@@ -72,9 +72,9 @@ const Contact = () => {
       contact: {
         title: "Contact Information",
         address: "Address",
-        addressValue: "123 Teheran-ro, Gangnam-gu, Seoul, South Korea",
+        addressValue: "#1901, Building 102, Paragon, 361 Gwangnaru-ro, Gwangjin-gu, Seoul",
         phone: "Phone",
-        phoneValue: "+82-2-1234-5678",
+        phoneValue: "+82 10 6488 6706",
         email: "Email",
         emailValue: "info@fujiglobal.kr",
         hours: "Business Hours",
