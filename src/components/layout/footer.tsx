@@ -13,8 +13,8 @@ const content = {
     tagline: "엘리베이터 기술의 선두주자",
     quickLinks: "빠른 링크",
     contact: "연락처",
-    address: "서울특별시 강남구 테헤란로 123",
-    phone: "+82-2-1234-5678",
+    address: "#1901, Building 102, Paragon, 361 Gwangnaru-ro, Gwangjin-gu, Seoul",
+    phone: "+82 10 6488 6706",
     email: "info@fujiglobal.kr",
     copyright: "© 2024 FUJI Global Korea. 모든 권리 보유.",
     links: [
@@ -29,8 +29,8 @@ const content = {
     tagline: "Leading Elevator Technology Solutions",
     quickLinks: "Quick Links",
     contact: "Contact Information",
-    address: "123 Teheran-ro, Gangnam-gu, Seoul, South Korea",
-    phone: "+82-2-1234-5678",
+    address: "#1901, Building 102, Paragon, 361 Gwangnaru-ro, Gwangjin-gu, Seoul",
+    phone: "+82 10 6488 6706",
     email: "info@fujiglobal.kr",
     copyright: "© 2024 FUJI Global Korea. All rights reserved.",
     links: [
