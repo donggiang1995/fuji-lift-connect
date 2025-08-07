@@ -67,7 +67,7 @@ export const HeroSection = ({
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
               <span className="block">{t.title}</span>
-              <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
+              <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-white-400 to-orange-400">
                 {t.titleHighlight}
               </span>
             </h1>
@@ -91,16 +91,14 @@ export const HeroSection = ({
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              {t.stats.map((stat, index) => 
-                <div key={index} className="metric-display rounded-lg p-4 glass-morphism bg-slate-800">
+              {t.stats.map((stat, index) => <div key={index} className="metric-display rounded-lg p-4 glass-morphism bg-slate-800">
                   <div className="text-2xl md:text-3xl font-bold text-primary mb-1">
                     {stat.number}
                   </div>
                   <div className="text-xs md:text-sm text-gray-300">
                     {stat.label}
                   </div>
-                </div>
-              )}
+                </div>)}
             </div>
 
             {/* Featured Images */}
