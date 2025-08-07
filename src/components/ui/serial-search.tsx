@@ -204,7 +204,7 @@ export const SerialSearch = ({ placeholder, onSearch, language = 'en' }: SerialS
               {/* Product Information */}
               {result.product && (
                 <Card className="industrial-card">
-                  <CardContent className="p-6">
+                  <CardContent className="p-6 relative">
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
@@ -267,6 +267,15 @@ export const SerialSearch = ({ placeholder, onSearch, language = 'en' }: SerialS
                           />
                         </div>
                       )}
+                    </div>
+                    
+                    {/* Small product image in bottom right corner */}
+                    <div className="absolute bottom-4 right-4">
+                      <img 
+                        src="/lovable-uploads/ed5049fa-e594-4bc3-87e3-ac19dc0a1789.png"
+                        alt="Product image"
+                        className="w-16 h-16 object-cover rounded-lg opacity-70 hover:opacity-100 transition-opacity"
+                      />
                     </div>
                   </CardContent>
                 </Card>
