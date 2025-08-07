@@ -57,7 +57,7 @@ export const HeroSection = ({
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img src={heroImage} alt="Industrial elevator technology" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 hero-gradient opacity-90"></div>
+        <div className="absolute inset-0 hero-gradient opacity-50"></div>
       </div>
 
       {/* Content */}
