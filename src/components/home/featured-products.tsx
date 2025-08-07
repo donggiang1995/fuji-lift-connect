@@ -32,7 +32,7 @@ const content = {
         category: "견인 시스템",
         description: "고효율 모터와 컴팩트한 디자인을 특징으로 하는 견인기",
         features: ["고효율 모터", "컴팩트 설계", "저소음 운전", "에너지 절약"],
-        image: tractionMachineImg,
+        image: "/lovable-uploads/eb73adf2-67b1-4162-b279-fc121934e5cc.png",
         badge: "신제품"
       },
       {
@@ -67,7 +67,7 @@ const content = {
         category: "Traction System",
         description: "High efficiency traction machine with compact design and high durability",
         features: ["High Efficiency Motor", "Compact Design", "Low Noise Operation", "Energy Saving"],
-        image: tractionMachineImg,
+        image: "/lovable-uploads/eb73adf2-67b1-4162-b279-fc121934e5cc.png",
         badge: "New"
       },
       {
@@ -114,7 +114,7 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
               {/* Product Image */}
               <div className="relative mb-6 overflow-hidden rounded-lg">
                 <img 
-                  src="/lovable-uploads/84a2e098-f01c-41bb-876d-16be6c539c61.png"
+                  src={product.image}
                   alt={product.name}
                   className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
                 />
