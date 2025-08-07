@@ -18,13 +18,8 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     if (savedLanguage && ['ko', 'en'].includes(savedLanguage)) {
       setLanguage(savedLanguage);
     } else {
-      // Detect browser language
-      const browserLang = navigator.language.toLowerCase();
-      if (browserLang.includes('ko')) {
-        setLanguage('ko');
-      } else {
-        setLanguage('en');
-      }
+      // Set Korean as default language
+      setLanguage('ko');
     }
   }, []);
 

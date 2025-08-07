@@ -65,18 +65,20 @@ export const HeroSection = ({
         <div className="max-w-6xl mx-auto">
           {/* Main Title - Centered */}
           <div className="flex items-center justify-center min-h-[60vh] mb-8">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold">
-              <span className="block">{t.title}</span>
-              <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
-                {t.titleHighlight}
-              </span>
-            </h1>
+            <div className="text-center">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
+                <span className="block">{t.title}</span>
+                <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
+                  {t.titleHighlight}
+                </span>
+              </h1>
+              
+              {/* Subtitle */}
+              <p className="text-base md:text-lg lg:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
+                {t.subtitle}
+              </p>
+            </div>
           </div>
-
-          {/* Subtitle */}
-          <p className="text-base md:text-lg lg:text-xl text-gray-200 mb-6 max-w-2xl mx-auto leading-relaxed">
-            {t.subtitle}
-          </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-12">
