@@ -57,9 +57,9 @@ export const Footer = ({ language }: FooterProps) => {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <img 
-                src={fujiLogo} 
+                src="/lovable-uploads/ec8e0728-48fb-40cf-b115-25de3b1bfb4d.png" 
                 alt="FUJI Global Korea" 
-                className="h-10 w-auto object-contain"
+                className="h-40 w-auto object-contain"
               />
               <div>
                 <h3 className="text-xl font-bold">{t.company}</h3>
