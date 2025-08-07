@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Cpu, Cog, Zap, Shield, Settings, MonitorSpeaker } from "lucide-react";
+import { Cpu, Cog, Zap, Shield, Settings, MonitorSpeaker, Download } from "lucide-react";
 import { ProductSearch } from "@/components/ui/product-search";
 
 const Products = () => {
@@ -91,7 +91,8 @@ const Products = () => {
         ]
       },
       viewDetails: "자세히 보기",
-      close: "닫기"
+      close: "닫기",
+      downloadCatalog: "카탈로그 다운로드"
     },
     en: {
       title: "Products",
@@ -149,11 +150,21 @@ const Products = () => {
         ]
       },
       viewDetails: "View Details",
-      close: "Close"
+      close: "Close",
+      downloadCatalog: "Download Catalog"
     }
   };
 
   const t = content[language];
+
+  const handleDownloadCatalog = () => {
+    const link = document.createElement('a');
+    link.href = 'https://drive.google.com/uc?export=download&id=1gcivwt7sCztH3z9qU4gimOnN_tbUnZ9s';
+    link.download = 'FUJI-Elevator-Catalog.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   if (loading) {
     return (
@@ -178,7 +189,15 @@ const Products = () => {
         <section className="py-20 bg-gradient-to-br from-primary via-primary-dark to-steel-dark">
           <div className="container mx-auto px-4 text-center text-white">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">{t.title}</h1>
-            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">{t.subtitle}</p>
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-8">{t.subtitle}</p>
+            <Button 
+              onClick={handleDownloadCatalog}
+              size="lg"
+              className="bg-white text-primary hover:bg-white/90 font-semibold px-8 py-3"
+            >
+              <Download className="h-5 w-5 mr-2" />
+              {t.downloadCatalog}
+            </Button>
           </div>
         </section>
 
