@@ -61,47 +61,49 @@ export const HeroSection = ({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center text-white">
-        <div className="max-w-4xl mx-auto">
-          {/* Main Title */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
-            <span className="block">{t.title}</span>
-            <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
-              {t.titleHighlight}
-            </span>
-          </h1>
+      <div className="relative z-10 container mx-auto px-2 text-center text-white">
+        <div className="max-w-6xl mx-auto">
+          {/* Main Title - Centered */}
+          <div className="flex items-center justify-center min-h-[60vh] mb-8">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold">
+              <span className="block">{t.title}</span>
+              <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
+                {t.titleHighlight}
+              </span>
+            </h1>
+          </div>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg lg:text-xl text-gray-200 mb-6 max-w-2xl mx-auto leading-relaxed">
             {t.subtitle}
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <Button size="lg" className="btn-industrial text-lg px-8 py-4 glow-effect">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-12">
+            <Button size="lg" className="btn-industrial text-base px-6 py-3 glow-effect">
               {t.cta1}
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <Button size="lg" variant="outline" className="glass-morphism border-white/30 text-lg px-8 py-4 text-cyan-950 bg-orange-400 hover:bg-orange-300">
-              <Play className="mr-2 h-5 w-5" />
+            <Button size="lg" variant="outline" className="glass-morphism border-white/30 text-base px-6 py-3 text-cyan-950 bg-orange-400 hover:bg-orange-300">
+              <Play className="mr-2 h-4 w-4" />
               {t.cta2}
             </Button>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-            {t.stats.map((stat, index) => <div key={index} className="metric-display rounded-lg p-6 glass-morphism bg-slate-800">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            {t.stats.map((stat, index) => <div key={index} className="metric-display rounded-lg p-4 glass-morphism bg-slate-800">
+                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">
                   {stat.number}
                 </div>
-                <div className="text-sm md:text-base text-gray-300 bg-sky-900">
+                <div className="text-xs md:text-sm text-gray-300 bg-sky-900">
                   {stat.label}
                 </div>
               </div>)}
           </div>
 
           {/* Featured Images */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             <div className="relative group overflow-hidden rounded-lg">
               <img 
                 src={elevatorInstallation} 
