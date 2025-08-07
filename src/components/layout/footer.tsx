@@ -59,7 +59,7 @@ export const Footer = ({ language }: FooterProps) => {
               <img 
                 src="/lovable-uploads/ec8e0728-48fb-40cf-b115-25de3b1bfb4d.png" 
                 alt="FUJI Global Korea" 
-                className="h-12 w-auto object-contain"
+                className="h-24 w-auto object-contain"
               />
               <div>
                 <h3 className="text-xl font-bold">{t.company}</h3>
