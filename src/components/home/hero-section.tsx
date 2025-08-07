@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-bg.jpg";
+import heroImage from "@/assets/modern-building-hero.jpg";
 import elevatorInstallation from "@/assets/elevator-installation.jpg";
 import elevatorControlRoom from "@/assets/elevator-control-room.jpg";
 interface HeroSectionProps {
