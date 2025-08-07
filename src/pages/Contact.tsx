@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
+import ContactMap from "@/components/ui/contact-map";
 
 const Contact = () => {
   const { language, setLanguage } = useLanguage();
@@ -237,12 +238,10 @@ const Contact = () => {
                   </CardContent>
                 </Card>
 
-                {/* Map Placeholder */}
+                {/* Map */}
                 <Card className="industrial-card">
-                  <CardContent className="p-0">
-                    <div className="aspect-video bg-muted flex items-center justify-center rounded-lg">
-                      <MapPin className="h-16 w-16 text-muted-foreground" />
-                    </div>
+                  <CardContent className="p-4">
+                    <ContactMap address={t.contact.addressValue} />
                   </CardContent>
                 </Card>
               </div>
