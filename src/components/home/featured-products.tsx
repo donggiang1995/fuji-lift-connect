@@ -19,7 +19,7 @@ const content = {
     products: [
       {
         id: 1,
-        name: "FCA-9000 시리즈",
+        name: "FJE1 제어판 시리즈",
         category: "제어 시스템",
         description: "고급 제어 패널을 갖춘 차세대 엘리베이터 제어 시스템",
         features: ["터치스크린 인터페이스", "에너지 효율적", "안전 인증", "IoT 연결"],
@@ -28,7 +28,7 @@ const content = {
       },
       {
         id: 2,
-        name: "TM-800S 견인기",
+        name: "FJK 권상기",
         category: "견인 시스템",
         description: "고효율 모터와 컴팩트한 디자인을 특징으로 하는 견인기",
         features: ["고효율 모터", "컴팩트 설계", "저소음 운전", "에너지 절약"],
@@ -37,7 +37,7 @@ const content = {
       },
       {
         id: 3,
-        name: "SCP-2024 제어 패널",
+        name: "FJE2 제어판 시리즈",
         category: "제어 시스템",
         description: "최신 기술이 적용된 사용자 친화적 제어 패널",
         features: ["7인치 LCD", "다국어 지원", "IoT 연결", "터치 인터페이스"],
@@ -54,7 +54,7 @@ const content = {
     products: [
       {
         id: 1,
-        name: "FCA-9000 Series",
+        name: "FJE1 Control Panel Series",
         category: "Control System",
         description: "Next-generation elevator control system with advanced control panel",
         features: ["Touch Screen Interface", "Energy Efficient", "Safety Certified", "IoT Connected"],
@@ -63,16 +63,16 @@ const content = {
       },
       {
         id: 2,
-        name: "TM-800S Traction Machine",
+        name: "FJK Traction Machine",
         category: "Traction System",
-        description: "High efficiency traction machine with compact design",
+        description: "High efficiency traction machine with compact design and high durability",
         features: ["High Efficiency Motor", "Compact Design", "Low Noise Operation", "Energy Saving"],
         image: tractionMachineImg,
         badge: "New"
       },
       {
         id: 3,
-        name: "SCP-2024 Control Panel",
+        name: "FJE2 Control Panel Series",
         category: "Control System",
         description: "Latest technology control panel with user-friendly interface",
         features: ["7-inch LCD", "Multi-language", "IoT Connectivity", "Touch Interface"],
