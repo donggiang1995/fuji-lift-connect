@@ -86,7 +86,7 @@ export const HeroSection = ({
               {t.cta1}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <Button size="lg" variant="outline" className="glass-morphism border-white/30 text-base px-6 py-3 text-cyan-950 bg-orange-400 hover:bg-orange-300">
+            <Button size="lg" variant="outline" className="glass-morphism border-white/30 text-base px-6 py-3 bg-slate-200 hover:bg-slate-100 text-slate-900">
               <Play className="mr-2 h-4 w-4" />
               {t.cta2}
             </Button>
@@ -107,11 +107,7 @@ export const HeroSection = ({
           {/* Featured Images */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             <div className="relative group overflow-hidden rounded-lg">
-              <img 
-                src={elevatorInstallation} 
-                alt="Elevator Installation" 
-                className="w-full h-64 object-cover transition-transform group-hover:scale-105"
-              />
+              <img src={elevatorInstallation} alt="Elevator Installation" className="w-full h-64 object-cover transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               <div className="absolute bottom-4 left-4 text-white">
                 <h4 className="font-bold text-lg">
@@ -123,11 +119,7 @@ export const HeroSection = ({
               </div>
             </div>
             <div className="relative group overflow-hidden rounded-lg">
-              <img 
-                src={elevatorControlRoom} 
-                alt="Control Room" 
-                className="w-full h-64 object-cover transition-transform group-hover:scale-105"
-              />
+              <img src={elevatorControlRoom} alt="Control Room" className="w-full h-64 object-cover transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               <div className="absolute bottom-4 left-4 text-white">
                 <h4 className="font-bold text-lg">
