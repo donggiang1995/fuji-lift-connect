@@ -217,7 +217,7 @@ const Products = () => {
                         .map((product) => (
                           <Card key={product.id} className="industrial-card hover:shadow-lg transition-shadow">
                             <CardContent className="p-6">
-                              <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                              <div className="aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
                                 {product.image_url ? (
                                   <img 
                                     src={getDirectImageUrl(product.image_url) || product.image_url} 
@@ -257,7 +257,7 @@ const Products = () => {
                                   </DialogHeader>
                                   <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                       <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                                       <div className="aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
                                          {product.image_url ? (
                                            <img 
                                              src={getDirectImageUrl(product.image_url) || product.image_url} 
