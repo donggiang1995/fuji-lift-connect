@@ -63,74 +63,75 @@ export const HeroSection = ({
       {/* Content */}
       <div className="relative z-10 container mx-auto px-2 text-center text-white">
         <div className="max-w-6xl mx-auto">
-          {/* Main Title - Centered */}
-          <div className="flex items-center justify-center min-h-[60vh] mb-8">
-            <div className="text-center">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
-                <span className="block">{t.title}</span>
-                <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
-                  {t.titleHighlight}
-                </span>
-              </h1>
-              
-              {/* Subtitle */}
-              <p className="text-base md:text-lg lg:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
-                {t.subtitle}
-              </p>
+          {/* Main Title */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
+              <span className="block">{t.title}</span>
+              <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
+                {t.titleHighlight}
+              </span>
+            </h1>
+            
+            {/* Subtitle */}
+            <p className="text-base md:text-lg lg:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed mb-8">
+              {t.subtitle}
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
+              <Button size="lg" className="btn-industrial text-base px-6 py-3 glow-effect">
+                {t.cta1}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button size="lg" variant="outline" className="glass-morphism border-white/30 text-base px-6 py-3 bg-slate-200 hover:bg-slate-100 text-slate-900">
+                <Play className="mr-2 h-4 w-4" />
+                {t.cta2}
+              </Button>
             </div>
-          </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-12">
-            <Button size="lg" className="btn-industrial text-base px-6 py-3 glow-effect">
-              {t.cta1}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button size="lg" variant="outline" className="glass-morphism border-white/30 text-base px-6 py-3 bg-slate-200 hover:bg-slate-100 text-slate-900">
-              <Play className="mr-2 h-4 w-4" />
-              {t.cta2}
-            </Button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {t.stats.map((stat, index) => <div key={index} className="metric-display rounded-lg p-4 glass-morphism bg-slate-800">
-                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">
-                  {stat.number}
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              {t.stats.map((stat, index) => 
+                <div key={index} className="metric-display rounded-lg p-4 glass-morphism bg-slate-800">
+                  <div className="text-2xl md:text-3xl font-bold text-primary mb-1">
+                    {stat.number}
+                  </div>
+                  <div className="text-xs md:text-sm text-gray-300">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-xs md:text-sm text-gray-300 bg-sky-900">
-                  {stat.label}
-                </div>
-              </div>)}
-          </div>
+              )}
+            </div>
 
-          {/* Featured Images */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            <div className="relative group overflow-hidden rounded-lg">
-              <img src={elevatorInstallation} alt="Elevator Installation" className="w-full h-64 object-cover transition-transform group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 text-white">
-                <h4 className="font-bold text-lg">
-                  {language === 'ko' ? '전문 설치 서비스' : 'Professional Installation'}
-                </h4>
-                <p className="text-sm text-gray-200">
-                  {language === 'ko' ? '최첨단 기술로 안전한 설치' : 'Safe installation with cutting-edge technology'}
-                </p>
+            {/* Featured Images */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              <div className="relative group overflow-hidden rounded-lg">
+                <img src={elevatorInstallation} alt="Elevator Installation" className="w-full h-64 object-cover transition-transform group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="font-bold text-lg">
+                    {language === 'ko' ? '전문 설치 서비스' : 'Professional Installation'}
+                  </h4>
+                  <p className="text-sm text-gray-200">
+                    {language === 'ko' ? '최첨단 기술로 안전한 설치' : 'Safe installation with cutting-edge technology'}
+                  </p>
+                </div>
+              </div>
+              <div className="relative group overflow-hidden rounded-lg">
+                <img src={elevatorControlRoom} alt="Control Room" className="w-full h-64 object-cover transition-transform group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="font-bold text-lg">
+                    {language === 'ko' ? '첨단 제어 시스템' : 'Advanced Control Systems'}
+                  </h4>
+                  <p className="text-sm text-gray-200">
+                    {language === 'ko' ? '스마트 모니터링 및 제어' : 'Smart monitoring and control'}
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="relative group overflow-hidden rounded-lg">
-              <img src={elevatorControlRoom} alt="Control Room" className="w-full h-64 object-cover transition-transform group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 text-white">
-                <h4 className="font-bold text-lg">
-                  {language === 'ko' ? '첨단 제어 시스템' : 'Advanced Control Systems'}
-                </h4>
-                <p className="text-sm text-gray-200">
-                  {language === 'ko' ? '스마트 모니터링 및 제어' : 'Smart monitoring and control'}
-                </p>
-              </div>
-            </div>
           </div>
+
         </div>
       </div>
 
