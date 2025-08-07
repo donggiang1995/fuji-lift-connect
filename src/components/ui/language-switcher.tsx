@@ -19,9 +19,8 @@ export const LanguageSwitcher = ({ currentLang, onLanguageChange }: LanguageSwit
       >
         <div className="w-6 h-4 bg-cover bg-center rounded-sm" 
              style={{ 
-               backgroundImage: `url(${flagsImage})`,
-               backgroundPosition: 'left center'
-             }} 
+               backgroundImage: `url(/lovable-uploads/6893d7ec-ed59-40ec-8a5f-8b821b1271f1.png)`
+             }}
         />
       </Button>
       
