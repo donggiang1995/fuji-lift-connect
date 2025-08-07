@@ -114,9 +114,9 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
               {/* Product Image */}
               <div className="relative mb-6 overflow-hidden rounded-lg">
                 <img 
-                  src={product.image} 
+                  src="/lovable-uploads/84a2e098-f01c-41bb-876d-16be6c539c61.png"
                   alt={product.name}
-                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <Badge 
                   className="absolute top-4 left-4 bg-primary text-primary-foreground"
