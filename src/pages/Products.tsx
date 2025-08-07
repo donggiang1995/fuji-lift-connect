@@ -178,10 +178,14 @@ const Products = () => {
             
             {categories.length > 0 ? (
               <Tabs defaultValue={categories[0]?.id} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsList className="grid w-full grid-cols-2 mb-8 h-16 bg-gradient-to-r from-primary/10 to-secondary/10 p-2">
                   {categories.slice(0, 2).map((category) => (
-                    <TabsTrigger key={category.id} value={category.id} className="text-lg py-3">
-                      <Cpu className="h-5 w-5 mr-2" />
+                    <TabsTrigger 
+                      key={category.id} 
+                      value={category.id} 
+                      className="text-lg py-4 px-6 font-semibold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all duration-300 hover:bg-primary/20"
+                    >
+                      <Cpu className="h-6 w-6 mr-3" />
                       {language === 'ko' ? category.name_ko : category.name_en}
                     </TabsTrigger>
                   ))}
