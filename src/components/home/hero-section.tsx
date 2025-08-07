@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/modern-building-hero.jpg";
 import elevatorInstallation from "@/assets/elevator-installation.jpg";
 import elevatorControlRoom from "@/assets/elevator-control-room.jpg";
@@ -53,6 +54,7 @@ export const HeroSection = ({
   language
 }: HeroSectionProps) => {
   const t = content[language];
+  const navigate = useNavigate();
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
@@ -79,11 +81,11 @@ export const HeroSection = ({
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
-              <Button size="lg" className="btn-industrial text-base px-6 py-3 glow-effect">
+              <Button size="lg" className="btn-industrial text-base px-6 py-3 glow-effect" onClick={() => navigate('/products')}>
                 {t.cta1}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button size="lg" variant="outline" className="glass-morphism border-white/30 text-base py-3 bg-slate-200 hover:bg-slate-100 text-slate-900 px-[40px]">
+              <Button size="lg" variant="outline" className="glass-morphism border-white/30 text-base py-3 bg-slate-200 hover:bg-slate-100 text-slate-900 px-[40px]" onClick={() => navigate('/about')}>
                 <Play className="mr-2 h-4 w-4" />
                 {t.cta2}
               </Button>
