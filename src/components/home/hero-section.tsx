@@ -95,7 +95,7 @@ export const HeroSection = ({
                   <div className="text-2xl md:text-3xl font-bold text-primary mb-1">
                     {stat.number}
                   </div>
-                  <div className="text-xs md:text-sm text-gray-300">
+                  <div className="text-xs md:text-sm text-gray-300 bg-sky-700">
                     {stat.label}
                   </div>
                 </div>)}
