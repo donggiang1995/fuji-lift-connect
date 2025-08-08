@@ -42,7 +42,7 @@ export const SerialSearch = ({ placeholder, onSearch, language = 'en' }: SerialS
       model: "모델",
       specifications: "사양",
       features: "특징",
-      active: "정상 운행",
+      active: "원본",
       maintenance: "정비 중",
       retired: "운행 중단",
       errorMessage: "검색 중 오류가 발생했습니다"
@@ -61,7 +61,7 @@ export const SerialSearch = ({ placeholder, onSearch, language = 'en' }: SerialS
       model: "Model",
       specifications: "Specifications",
       features: "Features",
-      active: "Active",
+      active: "Original",
       maintenance: "Under Maintenance",
       retired: "Retired",
       errorMessage: "An error occurred during search"
