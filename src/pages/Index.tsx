@@ -11,7 +11,7 @@ const Index = () => {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-background" style={{ transform: 'scale(0.7)', transformOrigin: 'top center', width: '142.86%', marginLeft: '-21.43%' }}>
+    <div className="min-h-screen bg-background" style={{ transform: 'scale(0.85)', transformOrigin: 'top center', width: '117.65%', marginLeft: '-8.825%' }}>
       <Header language={language} onLanguageChange={setLanguage} />
       
       <main className="pt-16 md:pt-20">
