@@ -13,6 +13,7 @@ import Auth from "./pages/Auth";
 import News from "./pages/News";
 import Services from "./pages/Services";
 import Careers from "./pages/Careers";
+import SerialSearch from "./pages/SerialSearch";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/news" element={<News />} />
             <Route path="/careers" element={<Careers />} />
+            <Route path="/serial-search" element={<SerialSearch />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin" element={<Admin />} />
