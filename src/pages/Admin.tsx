@@ -287,6 +287,31 @@ const Admin = () => {
     ));
   };
 
+  const testDailyPing = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('daily-ping', {
+        body: { source: 'manual_test' }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Test thành công",
+        description: "Tính năng ping database đã được test thành công!",
+        variant: "default"
+      });
+      
+      console.log('Daily ping test result:', data);
+    } catch (error) {
+      console.error('Daily ping test failed:', error);
+      toast({
+        title: "Test thất bại",
+        description: "Có lỗi xảy ra khi test tính năng ping database",
+        variant: "destructive"
+      });
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
@@ -362,24 +387,46 @@ const Admin = () => {
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <Tabs defaultValue="products" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 mb-8">
-                <TabsTrigger value="products" className="text-sm md:text-base py-3">
-                  <Package className="h-4 w-4 mr-2" />
-                  {t.tabs.products}
-                </TabsTrigger>
-                <TabsTrigger value="inquiries" className="text-sm md:text-base py-3">
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  {t.tabs.inquiries}
-                </TabsTrigger>
-                <TabsTrigger value="categories" className="text-sm md:text-base py-3">
-                  <Settings className="h-4 w-4 mr-2" />
-                  {t.tabs.categories}
-                </TabsTrigger>
-                <TabsTrigger value="serials" className="text-sm md:text-base py-3">
-                  <Hash className="h-4 w-4 mr-2" />
-                  {t.tabs.serials}
-                </TabsTrigger>
-              </TabsList>
+              <div className="mb-8 flex flex-col gap-4">
+                <TabsList className="grid w-full grid-cols-4">
+                  <TabsTrigger value="products" className="text-sm md:text-base py-3">
+                    <Package className="h-4 w-4 mr-2" />
+                    {t.tabs.products}
+                  </TabsTrigger>
+                  <TabsTrigger value="inquiries" className="text-sm md:text-base py-3">
+                    <MessageSquare className="h-4 w-4 mr-2" />
+                    {t.tabs.inquiries}
+                  </TabsTrigger>
+                  <TabsTrigger value="categories" className="text-sm md:text-base py-3">
+                    <Settings className="h-4 w-4 mr-2" />
+                    {t.tabs.categories}
+                  </TabsTrigger>
+                  <TabsTrigger value="serials" className="text-sm md:text-base py-3">
+                    <Hash className="h-4 w-4 mr-2" />
+                    {t.tabs.serials}
+                  </TabsTrigger>
+                </TabsList>
+                
+                {/* Daily Ping Test Section */}
+                <Card className="bg-blue-50 border-blue-200">
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                          <Shield className="h-5 w-5 text-blue-600" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-blue-900">Database Keep-Alive System</h3>
+                          <p className="text-sm text-blue-700">Tự động ping database mỗi ngày lúc 2:00 AM để tránh bị pause</p>
+                        </div>
+                      </div>
+                      <Button onClick={testDailyPing} variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-100">
+                        Test Ping Function
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
 
               {/* Products Tab */}
               <TabsContent value="products">
