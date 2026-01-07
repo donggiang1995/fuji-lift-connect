@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import controlSystemImg from "@/assets/control-system.jpg";
 import tractionMachineImg from "@/assets/traction-machine.jpg";
+import elevatorControlCabinetImg from "@/assets/elevator-control-cabinet.png";
 
 interface FeaturedProductsProps {
   language: 'ko' | 'en';
@@ -114,7 +115,7 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
               {/* Product Image */}
               <div className="relative mb-6 overflow-hidden rounded-lg">
                 <img 
-                  src={product.image}
+                  src={index === 0 ? elevatorControlCabinetImg : product.image}
                   alt={product.name}
                   className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
                 />
