@@ -8,31 +8,14 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Cpu, Cog, Zap, Shield, Settings, MonitorSpeaker, Download } from "lucide-react";
+import { Cpu, Cog, Zap, Shield, Settings, MonitorSpeaker, Download, Package } from "lucide-react";
 import { ProductSearch } from "@/components/ui/product-search";
+import { getValidImageUrl } from "@/lib/image-utils";
 
 const Products = () => {
   const { language, setLanguage } = useLanguage();
   const { products, categories, loading } = useProducts();
   const [filteredProducts, setFilteredProducts] = React.useState(products);
-
-  // Helper function to convert imgbb share URLs to direct image URLs
-  const getDirectImageUrl = (url: string) => {
-    if (!url) return null;
-    
-    // If it's already a direct image URL, return as is
-    if (url.includes('i.ibb.co') || url.includes('.jpg') || url.includes('.png') || url.includes('.jpeg')) {
-      return url;
-    }
-    
-    // Convert imgbb share URL to direct URL
-    if (url.includes('ibb.co/')) {
-      const imageId = url.split('ibb.co/')[1];
-      return `https://i.ibb.co/${imageId}/image.png`;
-    }
-    
-    return url;
-  };
 
   const content = {
     ko: {
@@ -231,15 +214,17 @@ const Products = () => {
                 {categories.map((category) => (
                   <TabsContent key={category.id} value={category.id}>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {filteredProducts
+                        {filteredProducts
                         .filter(product => product.category_id === category.id)
-                        .map((product) => (
+                        .map((product) => {
+                          const validImageUrl = getValidImageUrl(product.image_url);
+                          return (
                           <Card key={product.id} className="industrial-card hover:shadow-lg transition-shadow">
                             <CardContent className="p-6">
                               <div className="aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                                {product.image_url ? (
+                                {validImageUrl ? (
                                   <img 
-                                    src={getDirectImageUrl(product.image_url) || product.image_url} 
+                                    src={validImageUrl} 
                                     alt={language === 'ko' ? product.name_ko : product.name_en}
                                     className="w-full h-full object-cover rounded-lg"
                                     onError={(e) => {
@@ -248,7 +233,7 @@ const Products = () => {
                                     }}
                                   />
                                 ) : null}
-                                <MonitorSpeaker className={`h-16 w-16 text-muted-foreground ${product.image_url ? 'hidden' : ''}`} />
+                                <Package className={`h-16 w-16 text-muted-foreground ${validImageUrl ? 'hidden' : ''}`} />
                               </div>
                               <h3 className="text-xl font-bold mb-3">
                                 {language === 'ko' ? product.name_ko : product.name_en}
@@ -277,9 +262,9 @@ const Products = () => {
                                   <div className="grid md:grid-cols-2 gap-6">
                                     <div>
                                        <div className="aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                                         {product.image_url ? (
+                                         {validImageUrl ? (
                                            <img 
-                                             src={getDirectImageUrl(product.image_url) || product.image_url} 
+                                             src={validImageUrl} 
                                              alt={language === 'ko' ? product.name_ko : product.name_en}
                                              className="w-full h-full object-cover rounded-lg"
                                              onError={(e) => {
@@ -288,7 +273,7 @@ const Products = () => {
                                              }}
                                            />
                                          ) : null}
-                                         <MonitorSpeaker className={`h-24 w-24 text-muted-foreground ${product.image_url ? 'hidden' : ''}`} />
+                                         <Package className={`h-24 w-24 text-muted-foreground ${validImageUrl ? 'hidden' : ''}`} />
                                        </div>
                                       <p className="text-muted-foreground">
                                         {language === 'ko' ? product.description_ko : product.description_en}
@@ -321,7 +306,8 @@ const Products = () => {
                               </Dialog>
                             </CardContent>
                           </Card>
-                        ))}
+                          );
+                        })}
                     </div>
                   </TabsContent>
                 ))}
