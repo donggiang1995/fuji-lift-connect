@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Building, Users, Award, Target, Globe, Shield, CheckCircle, Star } from "lucide-react";
 import aboutIndustrial from "@/assets/about-industrial.jpg";
 import aboutTeam from "@/assets/about-team.jpg";
-import fujiHeadquarters from "@/assets/fuji-headquarters.jpg";
+import fujiHeadquarters from "@/assets/fuji-global-korea-building.png";
 import awardsCertifications from "@/assets/awards-certifications.jpg";
 import globalPresence from "@/assets/global-presence.jpg";
 
