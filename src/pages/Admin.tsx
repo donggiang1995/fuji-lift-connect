@@ -15,6 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 import SerialNumberManager from '@/components/admin/serial-number-manager';
 import ProductImageUpload from '@/components/admin/product-image-upload';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { getValidImageUrl } from '@/lib/image-utils';
 import { 
   LayoutDashboard, 
   Package, 
@@ -452,21 +453,26 @@ const Admin = () => {
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {products.map((product) => (
+                          {products.map((product) => {
+                            const validImageUrl = getValidImageUrl(product.image_url);
+                            return (
                             <TableRow key={product.id}>
                               <TableCell>
                                 <div className="flex items-center gap-2">
-                                  {product.image_url ? (
+                                  {validImageUrl ? (
                                     <img 
-                                      src={product.image_url} 
+                                      src={validImageUrl} 
                                       alt={language === 'ko' ? product.name_ko : product.name_en}
                                       className="w-12 h-12 object-cover rounded border"
+                                      onError={(e) => {
+                                        e.currentTarget.style.display = 'none';
+                                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                                      }}
                                     />
-                                  ) : (
-                                    <div className="w-12 h-12 bg-muted rounded border flex items-center justify-center">
-                                      <Package className="h-6 w-6 text-muted-foreground" />
-                                    </div>
-                                  )}
+                                  ) : null}
+                                  <div className={`w-12 h-12 bg-muted rounded border flex items-center justify-center ${validImageUrl ? 'hidden' : ''}`}>
+                                    <Package className="h-6 w-6 text-muted-foreground" />
+                                  </div>
                                   <Dialog>
                                     <DialogTrigger asChild>
                                       <Button size="sm" variant="outline">
@@ -530,7 +536,8 @@ const Admin = () => {
                                 </div>
                               </TableCell>
                             </TableRow>
-                          ))}
+                            );
+                          })}
                         </TableBody>
                       </Table>
                     </div>

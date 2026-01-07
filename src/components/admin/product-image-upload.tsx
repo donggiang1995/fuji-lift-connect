@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Upload, X, Image as ImageIcon } from 'lucide-react';
+import { Upload, X, Image as ImageIcon, Package } from 'lucide-react';
+import { getValidImageUrl } from '@/lib/image-utils';
 
 interface ProductImageUploadProps {
   productId: string;
@@ -148,18 +149,31 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
 
   return (
     <div className="space-y-4">
-      {currentImageUrl && (
-        <div>
-          <Label className="text-sm font-medium">{t.currentImage}</Label>
-          <div className="mt-1">
-            <img 
-              src={currentImageUrl} 
-              alt="Product" 
-              className="w-24 h-24 object-cover rounded-lg border"
-            />
+      {(() => {
+        const validImageUrl = getValidImageUrl(currentImageUrl);
+        return validImageUrl ? (
+          <div>
+            <Label className="text-sm font-medium">{t.currentImage}</Label>
+            <div className="mt-1">
+              <img 
+                src={validImageUrl} 
+                alt="Product" 
+                className="w-24 h-24 object-cover rounded-lg border"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        ) : currentImageUrl ? (
+          <div>
+            <Label className="text-sm font-medium">{t.currentImage}</Label>
+            <div className="mt-1 w-24 h-24 bg-muted rounded-lg border flex items-center justify-center">
+              <Package className="h-8 w-8 text-muted-foreground" />
+            </div>
+          </div>
+        ) : null;
+      })()}
 
       <div>
         <Label className="text-sm font-medium">{t.uploadImage}</Label>

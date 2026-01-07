@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, MapPin, Calendar, Loader2 } from "lucide-react";
+import { Search, MapPin, Calendar, Loader2, Package } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSerialNumbers, type SerialSearchResult } from "@/hooks/use-serial-numbers";
+import { getValidImageUrl } from "@/lib/image-utils";
 
 interface SerialSearchProps {
   placeholder?: string;
@@ -255,18 +256,25 @@ export const SerialSearch = ({ placeholder, onSearch, language = 'en' }: SerialS
                       </div>
                       
                       {/* Product Image */}
-                      {result.product.image_url && (
-                        <div className="ml-4 flex-shrink-0">
-                          <img 
-                            src={result.product.image_url} 
-                            alt={validLanguage === 'ko' ? result.product.name_ko : result.product.name_en}
-                            className="w-40 h-40 object-cover rounded-lg"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                            }}
-                          />
-                        </div>
-                      )}
+                      {(() => {
+                        const validImageUrl = getValidImageUrl(result.product.image_url);
+                        return validImageUrl ? (
+                          <div className="ml-4 flex-shrink-0">
+                            <img 
+                              src={validImageUrl} 
+                              alt={validLanguage === 'ko' ? result.product.name_ko : result.product.name_en}
+                              className="w-40 h-40 object-cover rounded-lg"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="ml-4 flex-shrink-0 w-40 h-40 bg-muted rounded-lg flex items-center justify-center">
+                            <Package className="h-12 w-12 text-muted-foreground" />
+                          </div>
+                        );
+                      })()}
                     </div>
                   </CardContent>
                 </Card>
