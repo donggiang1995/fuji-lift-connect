@@ -1,10 +1,8 @@
 import React from "react";
-import { ArrowRight, Zap, Shield, Settings, Cpu } from "lucide-react";
+import { ArrowRight, Shield, Settings, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import controlSystemImg from "@/assets/control-system.jpg";
-import tractionMachineImg from "@/assets/traction-machine.jpg";
 import elevatorControlCabinetImg from "@/assets/elevator-control-cabinet.png";
 
 interface FeaturedProductsProps {
@@ -86,9 +84,8 @@ const content = {
 
 const iconMap = {
   0: Cpu,
-  1: Zap,
-  2: Settings,
-  3: Shield
+  1: Settings,
+  2: Shield,
 };
 
 export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
@@ -100,13 +97,13 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 
+          <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in"
             style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
           >
             {t.title}
           </h2>
-          <p 
+          <p
             className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in"
             style={{ animationDelay: '0.3s', animationFillMode: 'both' }}
           >
@@ -117,35 +114,27 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {t.products.map((product, index) => (
-            <div 
-              key={product.id} 
-              className="industrial-card rounded-xl p-6 group animate-fade-in"
+            <div
+              key={product.id}
+              className="industrial-card rounded-xl p-6 group animate-enter"
               style={{ animationDelay: `${0.4 + index * 0.15}s`, animationFillMode: 'both' }}
             >
               {/* Product Image */}
               <div className="relative mb-6 overflow-hidden rounded-lg">
-                <img 
+                <img
                   src={index === 0 ? elevatorControlCabinetImg : product.image}
                   alt={product.name}
                   className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <Badge 
-                  className="absolute top-4 left-4 bg-primary text-primary-foreground"
-                >
-                  {product.badge}
-                </Badge>
+                <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">{product.badge}</Badge>
               </div>
 
               {/* Product Info */}
               <div className="space-y-4">
                 <div>
-                  <Badge variant="outline" className="mb-2">
-                    {product.category}
-                  </Badge>
+                  <Badge variant="outline" className="mb-2">{product.category}</Badge>
                   <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {product.description}
-                  </p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{product.description}</p>
                 </div>
 
                 {/* Features */}
@@ -162,8 +151,8 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
                 </div>
 
                 {/* Learn More Button */}
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
                 >
                   {t.learnMore}
@@ -174,15 +163,8 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
           ))}
         </div>
 
-        <div 
-          className="text-center animate-fade-in"
-          style={{ animationDelay: '0.9s', animationFillMode: 'both' }}
-        >
-          <Button 
-            size="lg" 
-            className="btn-industrial"
-            onClick={() => navigate('/products')}
-          >
+        <div className="text-center animate-enter" style={{ animationDelay: '0.9s', animationFillMode: 'both' }}>
+          <Button size="lg" className="btn-industrial" onClick={() => navigate('/products')}>
             {t.viewAll}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>

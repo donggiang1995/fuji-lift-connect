@@ -34,13 +34,13 @@ export const SerialSearchSection = ({ language }: SerialSearchSectionProps) => {
                 <Database className="h-6 w-6 text-secondary" />
               </div>
             </div>
-            <h2 
+            <h2
               className="text-3xl md:text-4xl font-bold text-foreground mb-4 animate-fade-in"
               style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
             >
               {content[language].title}
             </h2>
-            <p 
+            <p
               className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in"
               style={{ animationDelay: '0.4s', animationFillMode: 'both' }}
             >
@@ -49,12 +49,12 @@ export const SerialSearchSection = ({ language }: SerialSearchSectionProps) => {
           </div>
 
           {/* Search Panel */}
-          <div 
-            className="bg-card/80 backdrop-blur-sm rounded-2xl border shadow-lg p-8 animate-fade-in"
+          <div
+            className="bg-card/80 backdrop-blur-sm rounded-2xl border shadow-lg p-8 animate-enter"
             style={{ animationDelay: '0.6s', animationFillMode: 'both' }}
           >
             <div className="max-w-2xl mx-auto">
-              <SerialSearch 
+              <SerialSearch
                 placeholder={content[language].placeholder}
                 onSearch={(serialNumber) => {
                   console.log('Searching for:', serialNumber);
@@ -62,11 +62,11 @@ export const SerialSearchSection = ({ language }: SerialSearchSectionProps) => {
                 language={language}
               />
             </div>
-            
+
             {/* Info Cards */}
             <div className="grid md:grid-cols-3 gap-4 mt-8 text-center">
-              <div 
-                className="p-4 rounded-lg bg-primary/5 animate-fade-in"
+              <div
+                className="p-4 rounded-lg bg-primary/5 animate-enter"
                 style={{ animationDelay: '0.8s', animationFillMode: 'both' }}
               >
                 <div className="text-2xl font-bold text-primary mb-1">24/7</div>
@@ -74,8 +74,8 @@ export const SerialSearchSection = ({ language }: SerialSearchSectionProps) => {
                   {language === 'ko' ? '실시간 조회' : 'Real-time Search'}
                 </div>
               </div>
-              <div 
-                className="p-4 rounded-lg bg-secondary/5 animate-fade-in"
+              <div
+                className="p-4 rounded-lg bg-secondary/5 animate-enter"
                 style={{ animationDelay: '0.9s', animationFillMode: 'both' }}
               >
                 <div className="text-2xl font-bold text-secondary mb-1">100%</div>
@@ -83,16 +83,12 @@ export const SerialSearchSection = ({ language }: SerialSearchSectionProps) => {
                   {language === 'ko' ? '정확한 정보' : 'Accurate Info'}
                 </div>
               </div>
-              <div 
-                className="p-4 rounded-lg bg-accent/5 animate-fade-in"
+              <div
+                className="p-4 rounded-lg bg-accent/5 animate-enter"
                 style={{ animationDelay: '1s', animationFillMode: 'both' }}
               >
-                <div className="text-2xl font-bold text-accent mb-1">
-                  {language === 'ko' ? '즉시' : 'Instant'}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {language === 'ko' ? '결과 확인' : 'Results'}
-                </div>
+                <div className="text-2xl font-bold text-accent mb-1">{language === 'ko' ? '즉시' : 'Instant'}</div>
+                <div className="text-sm text-muted-foreground">{language === 'ko' ? '결과 확인' : 'Results'}</div>
               </div>
             </div>
           </div>
