@@ -26,7 +26,7 @@ export const SerialSearchSection = ({ language }: SerialSearchSectionProps) => {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-4 animate-scale-in">
               <div className="p-3 rounded-full bg-primary/10">
                 <Search className="h-6 w-6 text-primary" />
               </div>
@@ -34,16 +34,25 @@ export const SerialSearchSection = ({ language }: SerialSearchSectionProps) => {
                 <Database className="h-6 w-6 text-secondary" />
               </div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <h2 
+              className="text-3xl md:text-4xl font-bold text-foreground mb-4 animate-fade-in"
+              style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
+            >
               {content[language].title}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p 
+              className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in"
+              style={{ animationDelay: '0.4s', animationFillMode: 'both' }}
+            >
               {content[language].subtitle}
             </p>
           </div>
 
           {/* Search Panel */}
-          <div className="bg-card/80 backdrop-blur-sm rounded-2xl border shadow-lg p-8">
+          <div 
+            className="bg-card/80 backdrop-blur-sm rounded-2xl border shadow-lg p-8 animate-fade-in"
+            style={{ animationDelay: '0.6s', animationFillMode: 'both' }}
+          >
             <div className="max-w-2xl mx-auto">
               <SerialSearch 
                 placeholder={content[language].placeholder}
@@ -56,19 +65,28 @@ export const SerialSearchSection = ({ language }: SerialSearchSectionProps) => {
             
             {/* Info Cards */}
             <div className="grid md:grid-cols-3 gap-4 mt-8 text-center">
-              <div className="p-4 rounded-lg bg-primary/5">
+              <div 
+                className="p-4 rounded-lg bg-primary/5 animate-fade-in"
+                style={{ animationDelay: '0.8s', animationFillMode: 'both' }}
+              >
                 <div className="text-2xl font-bold text-primary mb-1">24/7</div>
                 <div className="text-sm text-muted-foreground">
                   {language === 'ko' ? '실시간 조회' : 'Real-time Search'}
                 </div>
               </div>
-              <div className="p-4 rounded-lg bg-secondary/5">
+              <div 
+                className="p-4 rounded-lg bg-secondary/5 animate-fade-in"
+                style={{ animationDelay: '0.9s', animationFillMode: 'both' }}
+              >
                 <div className="text-2xl font-bold text-secondary mb-1">100%</div>
                 <div className="text-sm text-muted-foreground">
                   {language === 'ko' ? '정확한 정보' : 'Accurate Info'}
                 </div>
               </div>
-              <div className="p-4 rounded-lg bg-accent/5">
+              <div 
+                className="p-4 rounded-lg bg-accent/5 animate-fade-in"
+                style={{ animationDelay: '1s', animationFillMode: 'both' }}
+              >
                 <div className="text-2xl font-bold text-accent mb-1">
                   {language === 'ko' ? '즉시' : 'Instant'}
                 </div>
