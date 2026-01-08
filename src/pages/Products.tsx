@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Cpu, Cog, Zap, Shield, Settings, MonitorSpeaker, Download, Package } from "lucide-react";
+import { Cpu, Cog, Zap, Shield, Settings, MonitorSpeaker, Download, Package, BookOpen, Eye } from "lucide-react";
 import { ProductSearch } from "@/components/ui/product-search";
 import { getValidImageUrl } from "@/lib/image-utils";
 
@@ -75,6 +75,8 @@ const Products = () => {
       },
       viewDetails: "자세히 보기",
       close: "닫기",
+      catalogProducts: "제품 카탈로그",
+      viewCatalog: "카탈로그 보기",
       downloadCatalog: "카탈로그 다운로드"
     },
     en: {
@@ -134,19 +136,30 @@ const Products = () => {
       },
       viewDetails: "View Details",
       close: "Close",
+      catalogProducts: "Catalog Products",
+      viewCatalog: "View Catalog",
       downloadCatalog: "Download Catalog"
     }
   };
 
   const t = content[language];
 
+  const catalogUrl = '/catalog/CATALOGUE_FUJI.pdf';
+  const [catalogOpen, setCatalogOpen] = useState(false);
+
+  const handleViewCatalog = () => {
+    window.open(catalogUrl, '_blank');
+    setCatalogOpen(false);
+  };
+
   const handleDownloadCatalog = () => {
     const link = document.createElement('a');
-    link.href = 'https://drive.google.com/uc?export=download&id=1gcivwt7sCztH3z9qU4gimOnN_tbUnZ9s';
+    link.href = catalogUrl;
     link.download = 'FUJI-Elevator-Catalog.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    setCatalogOpen(false);
   };
 
   if (loading) {
@@ -173,14 +186,40 @@ const Products = () => {
           <div className="container mx-auto px-4 text-center text-white">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">{t.title}</h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-8">{t.subtitle}</p>
-            <Button 
-              onClick={handleDownloadCatalog}
-              size="lg"
-              className="bg-white text-primary hover:bg-white/90 font-semibold px-8 py-3"
-            >
-              <Download className="h-5 w-5 mr-2" />
-              {t.downloadCatalog}
-            </Button>
+            <Dialog open={catalogOpen} onOpenChange={setCatalogOpen}>
+              <DialogTrigger asChild>
+                <Button 
+                  size="lg"
+                  className="bg-white text-primary hover:bg-white/90 font-semibold px-8 py-3"
+                >
+                  <BookOpen className="h-5 w-5 mr-2" />
+                  {t.catalogProducts}
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>{t.catalogProducts}</DialogTitle>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <Button 
+                    onClick={handleViewCatalog}
+                    variant="outline"
+                    className="w-full justify-start h-14 text-lg"
+                  >
+                    <Eye className="h-5 w-5 mr-3" />
+                    {t.viewCatalog}
+                  </Button>
+                  <Button 
+                    onClick={handleDownloadCatalog}
+                    variant="outline"
+                    className="w-full justify-start h-14 text-lg"
+                  >
+                    <Download className="h-5 w-5 mr-3" />
+                    {t.downloadCatalog}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </section>
 
