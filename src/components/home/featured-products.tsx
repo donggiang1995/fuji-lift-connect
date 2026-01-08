@@ -100,10 +100,16 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in"
+            style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
+          >
             {t.title}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p 
+            className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in"
+            style={{ animationDelay: '0.3s', animationFillMode: 'both' }}
+          >
             {t.subtitle}
           </p>
         </div>
@@ -111,7 +117,11 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {t.products.map((product, index) => (
-            <div key={product.id} className="industrial-card rounded-xl p-6 group">
+            <div 
+              key={product.id} 
+              className="industrial-card rounded-xl p-6 group animate-fade-in"
+              style={{ animationDelay: `${0.4 + index * 0.15}s`, animationFillMode: 'both' }}
+            >
               {/* Product Image */}
               <div className="relative mb-6 overflow-hidden rounded-lg">
                 <img 
@@ -164,7 +174,10 @@ export const FeaturedProducts = ({ language }: FeaturedProductsProps) => {
           ))}
         </div>
 
-        <div className="text-center">
+        <div 
+          className="text-center animate-fade-in"
+          style={{ animationDelay: '0.9s', animationFillMode: 'both' }}
+        >
           <Button 
             size="lg" 
             className="btn-industrial"

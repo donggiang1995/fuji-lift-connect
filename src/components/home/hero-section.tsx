@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/modern-building-hero.jpg";
 import elevatorInstallation from "@/assets/elevator-installation.jpg";
 import elevatorControlRoom from "@/assets/elevator-control-room.jpg";
+
 interface HeroSectionProps {
   language: 'ko' | 'en';
 }
+
 const content = {
   ko: {
     title: "엘리베이터 기술의",
@@ -50,12 +52,15 @@ const content = {
     }]
   }
 };
+
 export const HeroSection = ({
   language
 }: HeroSectionProps) => {
   const t = content[language];
   const navigate = useNavigate();
-  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img src={heroImage} alt="Industrial elevator technology" className="w-full h-full object-cover" />
@@ -68,19 +73,30 @@ export const HeroSection = ({
           {/* Main Title */}
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
-              <span className="block">{t.title}</span>
-              <span className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
+              <span className="block animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+                {t.title}
+              </span>
+              <span 
+                className="block text-gradient-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400 animate-fade-in" 
+                style={{ animationDelay: '0.3s', animationFillMode: 'both' }}
+              >
                 {t.titleHighlight}
               </span>
             </h1>
             
             {/* Subtitle */}
-            <p className="text-base md:text-lg lg:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed mb-8">
+            <p 
+              className="text-base md:text-lg lg:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed mb-8 animate-fade-in" 
+              style={{ animationDelay: '0.5s', animationFillMode: 'both' }}
+            >
               {t.subtitle}
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
+            <div 
+              className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8 animate-fade-in" 
+              style={{ animationDelay: '0.7s', animationFillMode: 'both' }}
+            >
               <Button size="lg" className="btn-industrial text-base px-6 py-3 glow-effect" onClick={() => navigate('/products')}>
                 {t.cta1}
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -93,19 +109,28 @@ export const HeroSection = ({
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              {t.stats.map((stat, index) => <div key={index} className="metric-display rounded-lg p-4 glass-morphism bg-slate-800">
+              {t.stats.map((stat, index) => (
+                <div 
+                  key={index} 
+                  className="metric-display rounded-lg p-4 glass-morphism bg-slate-800 animate-fade-in"
+                  style={{ animationDelay: `${0.9 + index * 0.1}s`, animationFillMode: 'both' }}
+                >
                   <div className="text-2xl md:text-3xl font-bold text-primary mb-1">
                     {stat.number}
                   </div>
                   <div className="text-xs md:text-sm text-gray-300 bg-blue-500">
                     {stat.label}
                   </div>
-                </div>)}
+                </div>
+              ))}
             </div>
 
             {/* Featured Images */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-              <div className="relative group overflow-hidden rounded-lg">
+              <div 
+                className="relative group overflow-hidden rounded-lg animate-fade-in"
+                style={{ animationDelay: '1.3s', animationFillMode: 'both' }}
+              >
                 <img src={elevatorInstallation} alt="Elevator Installation" className="w-full h-64 object-cover transition-transform group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
@@ -117,7 +142,10 @@ export const HeroSection = ({
                   </p>
                 </div>
               </div>
-              <div className="relative group overflow-hidden rounded-lg">
+              <div 
+                className="relative group overflow-hidden rounded-lg animate-fade-in"
+                style={{ animationDelay: '1.5s', animationFillMode: 'both' }}
+              >
                 <img src={elevatorControlRoom} alt="Control Room" className="w-full h-64 object-cover transition-transform group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
@@ -131,11 +159,11 @@ export const HeroSection = ({
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
       {/* Animated Elements */}
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent"></div>
-    </section>;
+    </section>
+  );
 };

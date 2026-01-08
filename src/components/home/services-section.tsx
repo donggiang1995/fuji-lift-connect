@@ -108,10 +108,16 @@ export const ServicesSection = ({ language }: ServicesSectionProps) => {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in"
+            style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
+          >
             {t.title}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p 
+            className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in"
+            style={{ animationDelay: '0.3s', animationFillMode: 'both' }}
+          >
             {t.subtitle}
           </p>
         </div>
@@ -121,7 +127,11 @@ export const ServicesSection = ({ language }: ServicesSectionProps) => {
           {t.services.map((service, index) => {
             const IconComponent = service.icon;
             return (
-              <Card key={index} className="industrial-card hover:shadow-lg transition-all group">
+              <Card 
+                key={index} 
+                className="industrial-card hover:shadow-lg transition-all group animate-fade-in"
+                style={{ animationDelay: `${0.4 + index * 0.1}s`, animationFillMode: 'both' }}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
@@ -146,7 +156,10 @@ export const ServicesSection = ({ language }: ServicesSectionProps) => {
 
         {/* Service Images */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <div className="relative group overflow-hidden rounded-lg">
+          <div 
+            className="relative group overflow-hidden rounded-lg animate-fade-in"
+            style={{ animationDelay: '1s', animationFillMode: 'both' }}
+          >
             <img 
               src={elevatorInterior} 
               alt="Elevator Interior" 
@@ -162,7 +175,10 @@ export const ServicesSection = ({ language }: ServicesSectionProps) => {
               </p>
             </div>
           </div>
-          <div className="relative group overflow-hidden rounded-lg">
+          <div 
+            className="relative group overflow-hidden rounded-lg animate-fade-in"
+            style={{ animationDelay: '1.1s', animationFillMode: 'both' }}
+          >
             <img 
               src={elevatorShaft} 
               alt="Elevator Shaft" 
@@ -181,7 +197,10 @@ export const ServicesSection = ({ language }: ServicesSectionProps) => {
         </div>
 
         {/* View All Services Button */}
-        <div className="text-center">
+        <div 
+          className="text-center animate-fade-in"
+          style={{ animationDelay: '1.2s', animationFillMode: 'both' }}
+        >
           <Button 
             size="lg" 
             className="btn-industrial"
