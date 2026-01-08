@@ -108,13 +108,13 @@ export const ServicesSection = ({ language }: ServicesSectionProps) => {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 
+          <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in"
             style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
           >
             {t.title}
           </h2>
-          <p 
+          <p
             className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in"
             style={{ animationDelay: '0.3s', animationFillMode: 'both' }}
           >
@@ -127,9 +127,9 @@ export const ServicesSection = ({ language }: ServicesSectionProps) => {
           {t.services.map((service, index) => {
             const IconComponent = service.icon;
             return (
-              <Card 
-                key={index} 
-                className="industrial-card hover:shadow-lg transition-all group animate-fade-in"
+              <Card
+                key={index}
+                className="industrial-card hover:shadow-lg transition-all group animate-enter"
                 style={{ animationDelay: `${0.4 + index * 0.1}s`, animationFillMode: 'both' }}
               >
                 <CardContent className="p-6">
@@ -156,56 +156,49 @@ export const ServicesSection = ({ language }: ServicesSectionProps) => {
 
         {/* Service Images */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <div 
-            className="relative group overflow-hidden rounded-lg animate-fade-in"
+          <div
+            className="relative group overflow-hidden rounded-lg animate-enter"
             style={{ animationDelay: '1s', animationFillMode: 'both' }}
           >
-            <img 
-              src={elevatorInterior} 
-              alt="Elevator Interior" 
+            <img
+              src={elevatorInterior}
+              alt="Elevator Interior"
               className="w-full h-80 object-cover transition-transform group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             <div className="absolute bottom-6 left-6 text-white">
-              <h4 className="font-bold text-xl mb-2">
-                {language === 'ko' ? '고급 엘리베이터 인테리어' : 'Premium Elevator Interior'}
-              </h4>
+              <h4 className="font-bold text-xl mb-2">{language === 'ko' ? '고급 엘리베이터 인테리어' : 'Premium Elevator Interior'}</h4>
               <p className="text-gray-200">
-                {language === 'ko' ? '현대적이고 세련된 디자인으로 편안한 승차감을 제공합니다' : 'Modern and sophisticated design providing comfortable ride experience'}
+                {language === 'ko'
+                  ? '현대적이고 세련된 디자인으로 편안한 승차감을 제공합니다'
+                  : 'Modern and sophisticated design providing comfortable ride experience'}
               </p>
             </div>
           </div>
-          <div 
-            className="relative group overflow-hidden rounded-lg animate-fade-in"
+          <div
+            className="relative group overflow-hidden rounded-lg animate-enter"
             style={{ animationDelay: '1.1s', animationFillMode: 'both' }}
           >
-            <img 
-              src={elevatorShaft} 
-              alt="Elevator Shaft" 
+            <img
+              src={elevatorShaft}
+              alt="Elevator Shaft"
               className="w-full h-80 object-cover transition-transform group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             <div className="absolute bottom-6 left-6 text-white">
-              <h4 className="font-bold text-xl mb-2">
-                {language === 'ko' ? '첨단 견인기 시스템' : 'Advanced Traction System'}
-              </h4>
+              <h4 className="font-bold text-xl mb-2">{language === 'ko' ? '첨단 견인기 시스템' : 'Advanced Traction System'}</h4>
               <p className="text-gray-200">
-                {language === 'ko' ? '최첨단 기술로 안전하고 효율적인 운행을 보장합니다' : 'Ensuring safe and efficient operation with cutting-edge technology'}
+                {language === 'ko'
+                  ? '최첨단 기술로 안전하고 효율적인 운행을 보장합니다'
+                  : 'Ensuring safe and efficient operation with cutting-edge technology'}
               </p>
             </div>
           </div>
         </div>
 
         {/* View All Services Button */}
-        <div 
-          className="text-center animate-fade-in"
-          style={{ animationDelay: '1.2s', animationFillMode: 'both' }}
-        >
-          <Button 
-            size="lg" 
-            className="btn-industrial"
-            onClick={() => navigate('/services')}
-          >
+        <div className="text-center animate-enter" style={{ animationDelay: '1.2s', animationFillMode: 'both' }}>
+          <Button size="lg" className="btn-industrial" onClick={() => navigate('/services')}>
             {t.viewAllServices}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
