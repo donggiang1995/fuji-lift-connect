@@ -1,1 +1,4 @@
 project_id = "okzpfjamnpusxcocjxeb"
+
+[functions.daily-ping]
+verify_jwt = false
