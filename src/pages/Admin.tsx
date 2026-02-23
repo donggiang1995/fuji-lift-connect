@@ -34,7 +34,11 @@ import {
   Plus,
   Settings,
   Copy,
-  Upload
+  Upload,
+  Activity,
+  CheckCircle,
+  XCircle,
+  RefreshCw
 } from 'lucide-react';
 
 const Admin = () => {
@@ -47,6 +51,9 @@ const Admin = () => {
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [pingStatus, setPingStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [pingResult, setPingResult] = useState<{ timestamp?: string; error?: string } | null>(null);
+  const [pingTesting, setPingTesting] = useState(false);
 
   // Redirect to auth page if not logged in
   useEffect(() => {
@@ -289,6 +296,8 @@ const Admin = () => {
   };
 
   const testDailyPing = async () => {
+    setPingTesting(true);
+    setPingStatus('loading');
     try {
       const { data, error } = await supabase.functions.invoke('daily-ping', {
         body: { source: 'manual_test' }
@@ -296,22 +305,34 @@ const Admin = () => {
 
       if (error) throw error;
 
+      setPingStatus('success');
+      setPingResult({ timestamp: data?.timestamp || new Date().toISOString() });
       toast({
-        title: "Test thành công",
-        description: "Tính năng ping database đã được test thành công!",
-        variant: "default"
+        title: "✅ Ping thành công",
+        description: `Database phản hồi lúc ${new Date(data?.timestamp || Date.now()).toLocaleString('vi-VN')}`,
       });
       
       console.log('Daily ping test result:', data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Daily ping test failed:', error);
+      setPingStatus('error');
+      setPingResult({ error: error.message || 'Không thể kết nối database' });
       toast({
-        title: "Test thất bại",
-        description: "Có lỗi xảy ra khi test tính năng ping database",
+        title: "❌ Ping thất bại",
+        description: "Hệ thống keep-alive có vấn đề! Kiểm tra Edge Function logs.",
         variant: "destructive"
       });
+    } finally {
+      setPingTesting(false);
     }
   };
+
+  // Auto-check ping status on admin load
+  useEffect(() => {
+    if (user && isAdmin) {
+      testDailyPing();
+    }
+  }, [user, isAdmin]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -408,21 +429,72 @@ const Admin = () => {
                   </TabsTrigger>
                 </TabsList>
                 
-                {/* Daily Ping Test Section */}
-                <Card className="bg-blue-50 border-blue-200">
+                {/* Daily Ping Status Section */}
+                <Card className={`border-2 ${
+                  pingStatus === 'error' ? 'bg-red-50 border-red-300' :
+                  pingStatus === 'success' ? 'bg-green-50 border-green-300' :
+                  'bg-blue-50 border-blue-200'
+                }`}>
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                          <Shield className="h-5 w-5 text-blue-600" />
+                        <div className={`h-10 w-10 rounded-full flex items-center justify-center ${
+                          pingStatus === 'error' ? 'bg-red-100' :
+                          pingStatus === 'success' ? 'bg-green-100' :
+                          'bg-blue-100'
+                        }`}>
+                          {pingStatus === 'loading' ? (
+                            <RefreshCw className="h-5 w-5 text-blue-600 animate-spin" />
+                          ) : pingStatus === 'error' ? (
+                            <XCircle className="h-5 w-5 text-red-600" />
+                          ) : pingStatus === 'success' ? (
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                          ) : (
+                            <Activity className="h-5 w-5 text-blue-600" />
+                          )}
                         </div>
                         <div>
-                          <h3 className="font-semibold text-blue-900">Database Keep-Alive System</h3>
-                          <p className="text-sm text-blue-700">Tự động ping database mỗi ngày lúc 2:00 AM để tránh bị pause</p>
+                          <h3 className={`font-semibold ${
+                            pingStatus === 'error' ? 'text-red-900' :
+                            pingStatus === 'success' ? 'text-green-900' :
+                            'text-blue-900'
+                          }`}>
+                            Database Keep-Alive System
+                            {pingStatus === 'success' && (
+                              <Badge className="ml-2 bg-green-600">Hoạt động tốt</Badge>
+                            )}
+                            {pingStatus === 'error' && (
+                              <Badge variant="destructive" className="ml-2">⚠️ Có lỗi!</Badge>
+                            )}
+                          </h3>
+                          <p className={`text-sm ${
+                            pingStatus === 'error' ? 'text-red-700' :
+                            pingStatus === 'success' ? 'text-green-700' :
+                            'text-blue-700'
+                          }`}>
+                            {pingStatus === 'loading' ? 'Đang kiểm tra...' :
+                             pingStatus === 'error' ? `❌ LỖI: ${pingResult?.error || 'Không thể ping database'}. Kiểm tra Edge Function logs ngay!` :
+                             pingStatus === 'success' ? `✅ Ping thành công lúc ${pingResult?.timestamp ? new Date(pingResult.timestamp).toLocaleString('vi-VN') : 'N/A'} — Cron: 2:00 AM UTC hàng ngày` :
+                             'Tự động ping database mỗi ngày lúc 2:00 AM để tránh bị pause'}
+                          </p>
                         </div>
                       </div>
-                      <Button onClick={testDailyPing} variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-100">
-                        Test Ping Function
+                      <Button 
+                        onClick={testDailyPing} 
+                        variant="outline" 
+                        disabled={pingTesting}
+                        className={`${
+                          pingStatus === 'error' ? 'border-red-300 text-red-700 hover:bg-red-100' :
+                          pingStatus === 'success' ? 'border-green-300 text-green-700 hover:bg-green-100' :
+                          'border-blue-300 text-blue-700 hover:bg-blue-100'
+                        }`}
+                      >
+                        {pingTesting ? (
+                          <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          <Activity className="h-4 w-4 mr-2" />
+                        )}
+                        {pingTesting ? 'Đang kiểm tra...' : 'Test Ping'}
                       </Button>
                     </div>
                   </CardContent>
