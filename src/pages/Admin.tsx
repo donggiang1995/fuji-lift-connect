@@ -297,6 +297,23 @@ const Admin = () => {
     ));
   };
 
+  const fetchPingHistory = async () => {
+    setPingHistoryLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('ping_logs')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(30);
+      if (error) throw error;
+      setPingHistory(data || []);
+    } catch (error) {
+      console.error('Error fetching ping history:', error);
+    } finally {
+      setPingHistoryLoading(false);
+    }
+  };
+
   const testDailyPing = async () => {
     setPingTesting(true);
     setPingStatus('loading');
@@ -311,10 +328,11 @@ const Admin = () => {
       setPingResult({ timestamp: data?.timestamp || new Date().toISOString() });
       toast({
         title: "✅ Ping thành công",
-        description: `Database phản hồi lúc ${new Date(data?.timestamp || Date.now()).toLocaleString('vi-VN')}`,
+        description: `Database phản hồi lúc ${new Date(data?.timestamp || Date.now()).toLocaleString('vi-VN')} (${data?.response_time_ms || '?'}ms)`,
       });
       
-      console.log('Daily ping test result:', data);
+      // Refresh history after test
+      fetchPingHistory();
     } catch (error: any) {
       console.error('Daily ping test failed:', error);
       setPingStatus('error');
@@ -324,6 +342,7 @@ const Admin = () => {
         description: "Hệ thống keep-alive có vấn đề! Kiểm tra Edge Function logs.",
         variant: "destructive"
       });
+      fetchPingHistory();
     } finally {
       setPingTesting(false);
     }
