@@ -521,6 +521,68 @@ const Admin = () => {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* Ping History */}
+                <Card className="border">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <Activity className="h-5 w-5" />
+                        Lịch sử Ping Database (30 lần gần nhất)
+                      </CardTitle>
+                      <Button variant="outline" size="sm" onClick={fetchPingHistory} disabled={pingHistoryLoading}>
+                        <RefreshCw className={`h-4 w-4 mr-1 ${pingHistoryLoading ? 'animate-spin' : ''}`} />
+                        Làm mới
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    {pingHistoryLoading && pingHistory.length === 0 ? (
+                      <div className="text-center py-4 text-muted-foreground">Đang tải...</div>
+                    ) : pingHistory.length === 0 ? (
+                      <div className="text-center py-4 text-muted-foreground">Chưa có dữ liệu ping nào</div>
+                    ) : (
+                      <div className="overflow-x-auto max-h-80 overflow-y-auto">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Thời gian</TableHead>
+                              <TableHead>Trạng thái</TableHead>
+                              <TableHead>Nguồn</TableHead>
+                              <TableHead>Thời gian phản hồi</TableHead>
+                              <TableHead>Ghi chú</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {pingHistory.map((log) => (
+                              <TableRow key={log.id}>
+                                <TableCell className="text-sm whitespace-nowrap">
+                                  {new Date(log.created_at).toLocaleString('vi-VN')}
+                                </TableCell>
+                                <TableCell>
+                                  <Badge variant={log.status === 'success' ? 'default' : 'destructive'}>
+                                    {log.status === 'success' ? '✅ OK' : '❌ Lỗi'}
+                                  </Badge>
+                                </TableCell>
+                                <TableCell>
+                                  <Badge variant="outline">
+                                    {log.source === 'cron' ? '⏰ Cron' : log.source === 'manual_test' ? '🖱️ Thủ công' : log.source}
+                                  </Badge>
+                                </TableCell>
+                                <TableCell className="text-sm">
+                                  {log.response_time_ms ? `${log.response_time_ms}ms` : '-'}
+                                </TableCell>
+                                <TableCell className="text-sm text-muted-foreground max-w-48 truncate">
+                                  {log.error_message || '-'}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
               </div>
 
               {/* Products Tab */}
