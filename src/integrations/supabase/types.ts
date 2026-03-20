@@ -122,6 +122,33 @@ export type Database = {
         }
         Relationships: []
       }
+      ping_logs: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          response_time_ms: number | null
+          source: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          response_time_ms?: number | null
+          source?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          response_time_ms?: number | null
+          source?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category_id: string
