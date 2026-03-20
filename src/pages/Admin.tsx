@@ -54,6 +54,8 @@ const Admin = () => {
   const [pingStatus, setPingStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [pingResult, setPingResult] = useState<{ timestamp?: string; error?: string } | null>(null);
   const [pingTesting, setPingTesting] = useState(false);
+  const [pingHistory, setPingHistory] = useState<any[]>([]);
+  const [pingHistoryLoading, setPingHistoryLoading] = useState(false);
 
   // Redirect to auth page if not logged in
   useEffect(() => {
