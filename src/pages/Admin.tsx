@@ -352,6 +352,7 @@ const Admin = () => {
   useEffect(() => {
     if (user && isAdmin) {
       testDailyPing();
+      fetchPingHistory();
     }
   }, [user, isAdmin]);
 
